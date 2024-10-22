@@ -31,7 +31,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // Database (DB 관련)
+    // Database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
@@ -47,19 +47,14 @@ dependencies {
     implementation("javax.cache:cache-api")
 
     // JAXB
-    implementation("javax.xml.bind:jaxb-api")
-    implementation("org.glassfish.jaxb:jaxb-runtime")
+    implementation("javax.xml.bind:jaxb-api:2.3.1")
+    implementation("org.glassfish.jaxb:jaxb-runtime:2.3.1")
 
     // Swagger
-    implementation("org.springdoc:springdoc-openapi-stater-webmvc-ui")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
     // Thymeleaf Extras
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
-
-    // JWT
-    implementation("io.jsonwebtoken:jjwt-api")
-    implementation("io.jsonwebtoken:jjwt-impl")
-    implementation("io.jsonwebtoken:jjwt-jackson")
 
     // Development Only
     developmentOnly("org.springframework.boot:spring-boot-devtools")
