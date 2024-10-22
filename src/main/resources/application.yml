@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: DARAM-server-V2
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:${DB_TYPE:mariadb}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:daram}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:123456}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+    generate-ddl: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+    type: jcache
+logging:
+  level:
+    root: debug
+    org.springframework.web: debug
+  file:
+    path: ./logs/application.log
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    jmx:
+      exposure:
+        include: prometheus
+jwt:
+  secret: ${JWT_SECRET}
+CLOUDFLARE_BUCKET_SUBDOMAIN: ${CLOUDFLARE_BUCKET_SUBDOMAIN}
+AWS_S3_BUCKET_NAME: ${AWS_S3_BUCKET_NAME}
+AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+AWS_REGION: ${AWS_REGION}
+AWS_S3_ENDPOINT: ${AWS_S3_ENDPOINT}
