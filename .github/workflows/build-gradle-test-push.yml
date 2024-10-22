@@ -1,8 +1,6 @@
-name: Gradle Build Test
+name: Gradle Build Test by Push
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 jobs:
   build:
