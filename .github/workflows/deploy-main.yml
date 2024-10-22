@@ -30,20 +30,34 @@ jobs:
             options:
               ports: "8080"
               env:
-                AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-                AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-                AWS_REGION: ${{ secrets.AWS_REGION }}
-                AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
-                AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
-                DB_HOST: ${{ secrets.DB_HOST }}
-                DB_PORT: ${{ secrets.DB_PORT }}
-                DB_USERNAME: ${{ secrets.DB_USERNAME }}
-                DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-                DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
-                DB_TYPE: ${{ secrets.DB_TYPE }}
-                REDIS_HOST: ${{ secrets.REDIS_HOST }}
-                REDIS_PORT: ${{ secrets.REDIS_PORT }}
-                JWT_SECRET: ${{ secrets.JWT_SECRET }}
+                - name: AWS_ACCESS_KEY
+                  value: ${{ secrets.AWS_ACCESS_KEY }}
+                - name: AWS_SECRET_KEY
+                  value: ${{ secrets.AWS_SECRET_KEY }}
+                - name: AWS_REGION
+                  value: ${{ secrets.AWS_REGION }}
+                - name: AWS_S3_BUCKET_NAME
+                  value: ${{ secrets.AWS_S3_BUCKET_NAME }}
+                - name: AWS_S3_ENDPOINT
+                  value: ${{ secrets.AWS_S3_ENDPOINT }}
+                - name: DB_HOST
+                  value: ${{ secrets.DB_HOST }}
+                - name: DB_PORT
+                  value: ${{ secrets.DB_PORT }}
+                - name: DB_USERNAME
+                  value: ${{ secrets.DB_USERNAME }}
+                - name: DB_PASSWORD
+                  value: ${{ secrets.DB_PASSWORD }}
+                - name: DB_SCHEMA
+                  value: ${{ secrets.DB_SCHEMA }}
+                - name: DB_TYPE
+                  value: ${{ secrets.DB_TYPE }}
+                - name: REDIS_HOST
+                  value: ${{ secrets.REDIS_HOST }}
+                - name: REDIS_PORT
+                  value: ${{ secrets.REDIS_PORT }}
+                - name: JWT_SECRET
+                  value: ${{ secrets.JWT_SECRET }}
               buildenv: []
               build: ./gradlew build
             context:
