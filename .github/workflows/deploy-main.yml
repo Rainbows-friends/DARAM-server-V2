@@ -30,16 +30,6 @@ jobs:
             options:
               ports: "8080"
               env:
-                - name: AWS_ACCESS_KEY
-                  value: ${{ secrets.AWS_ACCESS_KEY }}
-                - name: AWS_SECRET_KEY
-                  value: ${{ secrets.AWS_SECRET_KEY }}
-                - name: AWS_REGION
-                  value: ${{ secrets.AWS_REGION }}
-                - name: AWS_S3_BUCKET_NAME
-                  value: ${{ secrets.AWS_S3_BUCKET_NAME }}
-                - name: AWS_S3_ENDPOINT
-                  value: ${{ secrets.AWS_S3_ENDPOINT }}
                 - name: DB_HOST
                   value: ${{ secrets.DB_HOST }}
                 - name: DB_PORT
