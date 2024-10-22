@@ -23,7 +23,7 @@ jobs:
           project: snowykte0426/daram
           stage: main
           yaml: >
-            name: DARAM-server-V2
+            name: daram-server-v2
             app: java@21
             options:
               ports: "8080"
