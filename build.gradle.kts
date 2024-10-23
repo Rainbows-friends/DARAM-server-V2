@@ -53,6 +53,9 @@ dependencies {
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
+    // JAVAX
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+
     // Thymeleaf Extras
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 
