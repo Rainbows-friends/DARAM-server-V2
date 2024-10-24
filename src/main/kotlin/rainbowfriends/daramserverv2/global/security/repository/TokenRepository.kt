@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository
 import rainbowfriends.daramserverv2.global.security.entity.Token
 
 @Repository
-interface TokenRepository : CrudRepository<Token, Long> {
+interface TokenRepository : CrudRepository<Token, String> {
     fun deleteByToken(token: String)
+    fun existsByToken(token: String): Boolean
 }
