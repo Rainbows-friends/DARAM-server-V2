@@ -20,4 +20,8 @@ class RedisUtil(
     fun delete(key: String): Boolean {
         return redisTemplate.delete(key)
     }
+
+    fun exists(key: String): Boolean {
+        return redisTemplate.hasKey(key)
+    }
 }

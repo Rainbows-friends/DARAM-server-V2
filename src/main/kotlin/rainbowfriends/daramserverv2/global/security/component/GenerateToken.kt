@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component
 import rainbowfriends.daramserverv2.global.member.enums.Roles
 import rainbowfriends.daramserverv2.global.redis.RedisUtil
 import rainbowfriends.daramserverv2.global.security.entity.Token
-import rainbowfriends.daramserverv2.global.security.repository.TokenRepository
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.SecureRandom
@@ -13,7 +12,6 @@ import java.util.*
 
 @Component
 class GenerateToken(
-    private val tokenRepository: TokenRepository,
     private val redisUtil: RedisUtil,
     @Value("\${token.secret}")
     private val secret: String
@@ -38,13 +36,13 @@ class GenerateToken(
         do {
             val randomBase64String = generateRandomBase64String()
             accessToken = hashWithSecret(randomBase64String, secret)
-        } while (tokenRepository.existsByToken(accessToken))
+        } while (redisUtil.exists(accessToken))
         val token = Token(
             token = accessToken,
             role = roles,
             expiredAt = Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)
         )
-        redisUtil.set(accessToken, token, 1440)
+        redisUtil.set(token.token, token, 60 * 60 * 24)
         return accessToken
     }
 }
