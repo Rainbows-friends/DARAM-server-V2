@@ -32,8 +32,8 @@ spring:
     type: jcache
 logging:
   level:
-    root: debug
-    org.springframework.web: debug
+    root: info
+    org.springframework.web: info
   file:
     path: ./logs/application.log
 management:
@@ -44,5 +44,10 @@ management:
     jmx:
       exposure:
         include: prometheus
-jwt:
-  secret: ${JWT_SECRET}
+token:
+  secret: ${TOKEN_SECRET}
+production:
+  url: ${PROD_URL}
+server:
+  servlet:
+    context-path: /api/v2
