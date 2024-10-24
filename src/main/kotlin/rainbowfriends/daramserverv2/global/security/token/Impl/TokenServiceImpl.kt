@@ -29,7 +29,7 @@ class TokenServiceImpl(
         if (token.startsWith("Bearer ")) {
             return token.substring(7)
         } else {
-            throw TokenFormatException("Token Format Error")
+            return token
         }
     }
 
