@@ -8,7 +8,7 @@ import java.util.*
 @RedisHash("token", timeToLive = 60 * 60 * 24)
 data class Token(
     @Id val id: String = UUID.randomUUID().toString(),
-    var token: String,
-    var role: Roles,
-    var expiredAt: Date
+    var token: String = "",
+    var role: Roles = Roles.STUDENT,
+    var expiredAt: Date = Date()
 )
