@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import rainbowfriends.daramserverv2.domain.auth.exception.NoTokenException
 import rainbowfriends.daramserverv2.domain.auth.exception.TokenNotFoundException
+import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
 import rainbowfriends.daramserverv2.global.exception.TokenFormatException
 import rainbowfriends.daramserverv2.global.exception.dto.ErrorResponse
 import rainbowfriends.daramserverv2.global.exception.dto.enums.ErrorStatus
@@ -40,5 +41,15 @@ class GlobalExceptionHandler {
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(DuplicateNoticeException::class)
+    fun handleDuplicateNoticeException(ex: DuplicateNoticeException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.BAD_REQUEST.value(),
+            message = "Notice is already exist",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 }
