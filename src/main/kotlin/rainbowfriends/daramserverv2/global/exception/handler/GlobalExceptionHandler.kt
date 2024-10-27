@@ -10,13 +10,14 @@ import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeExcep
 import rainbowfriends.daramserverv2.global.exception.TokenFormatException
 import rainbowfriends.daramserverv2.global.exception.dto.ErrorResponse
 import rainbowfriends.daramserverv2.global.exception.dto.enums.ErrorStatus
+import java.security.InvalidKeyException
 
 @ControllerAdvice
 class GlobalExceptionHandler {
     @ExceptionHandler(TokenFormatException::class)
     fun handleTokenFormatException(ex: TokenFormatException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
-            code = HttpStatus.BAD_REQUEST.value(),
+            code = HttpStatus.UNAUTHORIZED.value(),
             message = "Token format is invalid",
             status = ErrorStatus.ERROR
         )
@@ -26,7 +27,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(NoTokenException::class)
     fun handleNoTokenException(ex: NoTokenException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
-            code = HttpStatus.BAD_REQUEST.value(),
+            code = HttpStatus.UNAUTHORIZED.value(),
             message = "Token is not provided",
             status = ErrorStatus.ERROR
         )
@@ -36,11 +37,11 @@ class GlobalExceptionHandler {
     @ExceptionHandler(TokenNotFoundException::class)
     fun handleTokenNotFoundException(ex: TokenNotFoundException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
-            code = HttpStatus.NOT_FOUND.value(),
+            code = HttpStatus.UNAUTHORIZED.value(),
             message = "Token is not found",
             status = ErrorStatus.ERROR
         )
-        return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
     }
 
     @ExceptionHandler(DuplicateNoticeException::class)
@@ -51,5 +52,15 @@ class GlobalExceptionHandler {
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(InvalidKeyException::class)
+    fun handleInvalidKeyException(ex: InvalidKeyException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Invalid key",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
     }
 }
