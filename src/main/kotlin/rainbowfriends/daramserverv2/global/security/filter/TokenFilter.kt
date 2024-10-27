@@ -3,6 +3,7 @@ package rainbowfriends.daramserverv2.global.security.filter
 import jakarta.servlet.*
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.StringUtils
 import rainbowfriends.daramserverv2.global.security.token.TokenService
 import java.io.IOException
@@ -22,10 +23,10 @@ class TokenFilter(private val tokenService: TokenService) : Filter {
             chain!!.doFilter(request, response)
             return
         }
-        val authorizationHeader = httpRequest.getHeader("Authorization")
-        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
-            val token = authorizationHeader.substring(7)
+        val token = httpRequest.getHeader("Authorization")
+        if (StringUtils.hasText(token)) {
             if (tokenService.validateToken(token)) {
+                SecurityContextHolder.getContext().authentication = tokenService.decodeToken(token)
                 chain!!.doFilter(request, response)
                 return
             }
