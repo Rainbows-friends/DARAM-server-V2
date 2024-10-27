@@ -23,10 +23,10 @@ class SecurityConfig(
             .cors { cors -> cors.configurationSource(corsConfig.configureCors()) }
             .csrf { csrf -> csrf.disable() }
             .formLogin { form -> form.disable() }
-            .authorizeHttpRequests { domainAuthorizationConfig.configure(it) }
             .addFilterBefore(
                 TokenFilter(jwtTokenService) as Filter,
                 UsernamePasswordAuthenticationFilter::class.java)
+            .authorizeHttpRequests { domainAuthorizationConfig.configure(it) }
         return http.build()
     }
 }

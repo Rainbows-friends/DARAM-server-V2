@@ -12,10 +12,8 @@ class LogoutServiceImpl(
 ) : LogoutService {
     override fun logout(request: HttpServletRequest) {
         tokenService.deleteToken(
-            tokenService.resolveToken(
-                request.getHeader("Authorization") ?: throw NoTokenException(
-                    "No Token"
-                )
+            request.getHeader("Authorization") ?: throw NoTokenException(
+                "No Token"
             )
         )
     }
