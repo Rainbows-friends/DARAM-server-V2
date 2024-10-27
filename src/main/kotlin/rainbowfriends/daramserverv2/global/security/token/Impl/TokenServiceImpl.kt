@@ -1,5 +1,6 @@
 package rainbowfriends.daramserverv2.global.security.token.Impl
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
 import rainbowfriends.daramserverv2.global.exception.TokenFormatException
 import rainbowfriends.daramserverv2.global.member.enums.Roles
@@ -25,15 +26,7 @@ class TokenServiceImpl(
         deleteToken.deleteToken(token)
     }
 
-    override fun resolveToken(token: String): String {
-        if (token.startsWith("Bearer ")) {
-            return token.substring(7)
-        } else {
-            return token
-        }
-    }
-
-    override fun decodeToken(token: String): Roles {
+    override fun decodeToken(token: String): UsernamePasswordAuthenticationToken {
         return decodeToken.decodeToken(token)
     }
 
