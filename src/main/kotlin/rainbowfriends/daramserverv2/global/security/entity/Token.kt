@@ -9,6 +9,6 @@ import java.util.*
 data class Token(
     @Id val id: String = UUID.randomUUID().toString(),
     var token: String = "",
-    var role: Roles = Roles.STUDENT,
+    var role: Roles = Roles.USER,
     var expiredAt: Date = Date()
 )
