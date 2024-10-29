@@ -1,5 +1,4 @@
 # DARAM-server-V2
-<img src="" width="200" height="200">
 
 2024 아이디어 페스티벌 AI 기숙사 입사관리 서비스 DARAM의 서버입니다.
 

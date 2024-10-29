@@ -19,7 +19,7 @@ class SaveNotice(
             title = request.title,
             context = request.content,
             author = role,
-            createdAt = LocalDateTime.now() //DB에서 한번 읽어와서 비교하는 로직으로 변경 필요 TODO
+            createdAt = LocalDateTime.now()
         )
         noticeRepository.findByTitle(request.title)?.let {
             if (it.author == role && it.context == request.content) {
