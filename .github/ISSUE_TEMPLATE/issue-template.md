@@ -3,7 +3,7 @@ name: Issue Template
 about: 통상적인 작업 관련 Issue 템플릿
 title: ''
 labels: ''
-assignees: ''
+assignees: snowykte0426
 
 ---
 
@@ -13,7 +13,7 @@ assignees: ''
 > 예상되는 작업의 소요시간을 ``yyyy/mm/dd~yyyy/mm/dd`` 형식으로 작성하여 주세요
 ## 담당👤
 > 해당 작업을 담당할 팀원을 멘션하여 주세요
-## 작업세부사항
+## 작업세부사항📑
 - [ ] TODO
 - [ ] TODO
 - [ ] TODO
