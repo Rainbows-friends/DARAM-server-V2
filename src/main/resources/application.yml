@@ -15,6 +15,9 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
     generate-ddl: true
   data:
+    mongodb:
+      database: DARAM
+      uri: ${MONGO_URL}
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
