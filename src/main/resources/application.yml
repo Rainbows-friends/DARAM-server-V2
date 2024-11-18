@@ -33,6 +33,10 @@ spring:
     jcache:
       config: classpath:ehcache.xml
     type: jcache
+  elasticsearch:
+    username: ${ES_USERNAME:elastic}
+    password: ${ES_PASSWORD:changeme}
+    uris: ${ES_URI:http://localhost:9200}
 logging:
   level:
     root: info
