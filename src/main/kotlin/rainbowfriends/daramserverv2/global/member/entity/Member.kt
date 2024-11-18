@@ -25,7 +25,9 @@ data class Member(
     @Column(nullable = false)
     val role: Roles,
     @Column(nullable = false)
-    val stay: Boolean = true
+    val stay: Boolean = true,
+    @Column(name = "late", nullable = false)
+    val lateNumber: Int
 ) {
     fun toElasticsearchDocument(): MemberElasticsearch {
         return MemberElasticsearch(
@@ -37,7 +39,8 @@ data class Member(
             floor = this.floor,
             room = this.room,
             role = this.role,
-            stay = this.stay
+            stay = this.stay,
+            lateNumber = this.lateNumber
         )
     }
 }

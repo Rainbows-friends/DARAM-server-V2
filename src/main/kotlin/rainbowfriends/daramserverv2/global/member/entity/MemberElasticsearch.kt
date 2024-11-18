@@ -25,5 +25,7 @@ data class MemberElasticsearch(
     @Field(type = FieldType.Keyword)
     val role: Roles,
     @Field(type = FieldType.Boolean)
-    val stay: Boolean
+    val stay: Boolean,
+    @Field(type = FieldType.Integer)
+    val lateNumber: Int
 )
