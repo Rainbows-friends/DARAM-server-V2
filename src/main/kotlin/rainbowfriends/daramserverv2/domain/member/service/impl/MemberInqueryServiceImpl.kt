@@ -3,14 +3,15 @@ package rainbowfriends.daramserverv2.domain.member.service.impl
 import org.springframework.stereotype.Service
 import rainbowfriends.daramserverv2.domain.member.component.MemberFindbyElasticsearch
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
-import rainbowfriends.daramserverv2.domain.member.service.AllMemberInqueryService
+import rainbowfriends.daramserverv2.domain.member.service.MemberInqueryService
 import rainbowfriends.daramserverv2.global.member.entity.MemberElasticsearch
 
 @Service
-class AllMemberInqueryServiceImpl(
+class MemberInqueryServiceImpl(
     private val memberFindbyElasticsearch: MemberFindbyElasticsearch
-) : AllMemberInqueryService {
+) : MemberInqueryService {
     override fun getAllMember(
+        id: Long?,
         stay: Boolean?,
         floor: Int?,
         room: Int?,
@@ -19,6 +20,7 @@ class AllMemberInqueryServiceImpl(
     ): List<MemberElasticsearch> {
         val allMembers = memberFindbyElasticsearch.findMemberByElasticsearch()
         val filteredMembers = allMembers
+            .let { filterMembersById(it, id) }
             .let { filterMembersByStay(it, stay) }
             .let { filterMembersByFloor(it, floor) }
             .let { filterMembersByRoom(it, room) }
@@ -28,6 +30,10 @@ class AllMemberInqueryServiceImpl(
             throw MemberNotFoundException("No member found")
         }
         return filteredMembers
+    }
+
+    private fun filterMembersById(members: List<MemberElasticsearch>, id: Long?): List<MemberElasticsearch> {
+        return if (id == null) members else members.filter { it.id == id }
     }
 
     private fun filterMembersByStay(members: List<MemberElasticsearch>, stay: Boolean?): List<MemberElasticsearch> {
