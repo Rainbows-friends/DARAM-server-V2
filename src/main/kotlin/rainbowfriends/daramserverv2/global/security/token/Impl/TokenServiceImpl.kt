@@ -2,7 +2,6 @@ package rainbowfriends.daramserverv2.global.security.token.Impl
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Service
-import rainbowfriends.daramserverv2.global.exception.TokenFormatException
 import rainbowfriends.daramserverv2.global.member.enums.Roles
 import rainbowfriends.daramserverv2.global.security.component.DecodeToken
 import rainbowfriends.daramserverv2.global.security.component.DeleteToken
