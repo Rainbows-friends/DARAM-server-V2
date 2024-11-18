@@ -9,7 +9,7 @@ import rainbowfriends.daramserverv2.global.member.enums.Roles
 @Document(indexName = "members")
 data class MemberElasticsearch(
     @Id
-    val id: Long,
+    val id: Long?,
     @Field(type = FieldType.Text)
     val name: String,
     @Field(type = FieldType.Integer)
@@ -23,5 +23,7 @@ data class MemberElasticsearch(
     @Field(type = FieldType.Integer)
     val room: Int,
     @Field(type = FieldType.Keyword)
-    val role: Roles
+    val role: Roles,
+    @Field(type = FieldType.Boolean)
+    val stay: Boolean
 )

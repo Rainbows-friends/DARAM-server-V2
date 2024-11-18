@@ -23,5 +23,21 @@ data class Member(
     val room: Int,
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    val role: Roles
-)
+    val role: Roles,
+    @Column(nullable = false)
+    val stay: Boolean = true
+) {
+    fun toElasticsearchDocument(): MemberElasticsearch {
+        return MemberElasticsearch(
+            id = this.id,
+            name = this.name,
+            grade = this.grade,
+            classNum = this.classNum,
+            number = this.number,
+            floor = this.floor,
+            room = this.room,
+            role = this.role,
+            stay = this.stay
+        )
+    }
+}
