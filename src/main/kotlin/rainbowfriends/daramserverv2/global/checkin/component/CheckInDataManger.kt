@@ -24,7 +24,7 @@ class CheckInDataManger(
     private val cacheConfig: CacheConfig
 ) {
     @Scheduled(cron = "0 30 21 * * *")
-    fun scheduledCheckInDataSync() {
+    fun scheduledCheckInDataSync() { // TODO lateNumber를 증분하는 로직 추가 필요
         val today: LocalDate? = LocalDate.now()
         val tomorrow: LocalDate? = today?.plusDays(1)
         println(tomorrow)
