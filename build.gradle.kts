@@ -34,6 +34,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework:spring-context-support")
 
     // Database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -49,8 +51,7 @@ dependencies {
 
     // Cache
     implementation("org.springframework.boot:spring-boot-starter-cache")
-    implementation("org.ehcache:ehcache")
-    implementation("javax.cache:cache-api")
+    implementation("com.github.ben-manes.caffeine:caffeine")
 
     // JAXB
     implementation("javax.xml.bind:jaxb-api:2.3.1")
@@ -77,6 +78,7 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("org.springframework.retry:spring-retry")
 }
 
 kotlin {
