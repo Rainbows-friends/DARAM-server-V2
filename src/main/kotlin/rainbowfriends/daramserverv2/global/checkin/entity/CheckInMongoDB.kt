@@ -1,4 +1,4 @@
-package rainbowfriends.daramserverv2.domain.checkin.entity
+package rainbowfriends.daramserverv2.global.checkin.entity
 
 import jakarta.persistence.Id
 import org.springframework.data.mongodb.core.mapping.DBRef
@@ -7,7 +7,7 @@ import rainbowfriends.daramserverv2.global.member.entity.Member
 import java.time.LocalDate
 
 @Document(collection = "checkin")
-data class CheckInInfo(
+data class CheckInMongoDB(
     @Id val id: String = "",
     @DBRef val user: Member,
     var checkinStatus: Boolean,
