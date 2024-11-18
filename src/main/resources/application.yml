@@ -15,6 +15,9 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
     generate-ddl: true
   data:
+    mongodb:
+      database: DARAM
+      uri: ${MONGO_URL}
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
@@ -27,9 +30,11 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
   cache:
-    jcache:
-      config: classpath:ehcache.xml
-    type: jcache
+    type: caffeine
+  elasticsearch:
+    username: ${ES_USERNAME:elastic}
+    password: ${ES_PASSWORD:changeme}
+    uris: ${ES_URI:http://localhost:9200}
 logging:
   level:
     root: info

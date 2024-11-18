@@ -1,0 +1,6 @@
+package rainbowfriends.daramserverv2.global.member.repository
+
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
+import rainbowfriends.daramserverv2.global.member.entity.MemberElasticsearch
+
+interface MemberElasticsearchRepository : ElasticsearchRepository<MemberElasticsearch, Long>

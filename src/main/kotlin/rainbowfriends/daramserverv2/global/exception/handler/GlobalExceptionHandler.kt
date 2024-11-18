@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import rainbowfriends.daramserverv2.domain.auth.exception.NoTokenException
 import rainbowfriends.daramserverv2.domain.auth.exception.TokenNotFoundException
+import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
 import rainbowfriends.daramserverv2.global.exception.TokenFormatException
 import rainbowfriends.daramserverv2.global.exception.dto.ErrorResponse
@@ -62,5 +63,15 @@ class GlobalExceptionHandler {
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(MemberNotFoundException::class)
+    fun handleMemberNotFoundException(ex: MemberNotFoundException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.NOT_FOUND.value(),
+            message = "Member is not found",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
     }
 }
