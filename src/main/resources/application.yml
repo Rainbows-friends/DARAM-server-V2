@@ -30,9 +30,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
   cache:
-    jcache:
-      config: classpath:ehcache.xml
-    type: jcache
+    type: caffeine
   elasticsearch:
     username: ${ES_USERNAME:elastic}
     password: ${ES_PASSWORD:changeme}
