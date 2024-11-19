@@ -1,14 +1,14 @@
 package rainbowfriends.daramserverv2.domain.member.service.impl
 
 import org.springframework.stereotype.Service
-import rainbowfriends.daramserverv2.domain.member.component.MemberFindbyElasticsearch
+import rainbowfriends.daramserverv2.domain.member.component.MemberFind
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.member.service.MemberInqueryService
 import rainbowfriends.daramserverv2.global.member.entity.Member
 
 @Service
 class MemberInqueryServiceImpl(
-    private val memberFindbyElasticsearch: MemberFindbyElasticsearch
+    private val memberFind: MemberFind
 ) : MemberInqueryService {
     override fun getAllMember(
         id: Long?,
@@ -18,7 +18,7 @@ class MemberInqueryServiceImpl(
         grade: Int?,
         classNum: Int?
     ): List<Member> {
-        val allMembers = memberFindbyElasticsearch.findMemberByElasticsearch()
+        val allMembers = memberFind.findMemberByElasticsearch()
         val filteredMembers = allMembers
             .let { filterMembersById(it, id) }
             .let { filterMembersByStay(it, stay) }
