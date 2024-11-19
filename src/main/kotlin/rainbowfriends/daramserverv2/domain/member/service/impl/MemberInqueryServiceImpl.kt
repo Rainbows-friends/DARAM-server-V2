@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 import rainbowfriends.daramserverv2.domain.member.component.MemberFindbyElasticsearch
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.member.service.MemberInqueryService
-import rainbowfriends.daramserverv2.global.member.entity.MemberElasticsearch
+import rainbowfriends.daramserverv2.global.member.entity.Member
 
 @Service
 class MemberInqueryServiceImpl(
@@ -17,7 +17,7 @@ class MemberInqueryServiceImpl(
         room: Int?,
         grade: Int?,
         classNum: Int?
-    ): List<MemberElasticsearch> {
+    ): List<Member> {
         val allMembers = memberFindbyElasticsearch.findMemberByElasticsearch()
         val filteredMembers = allMembers
             .let { filterMembersById(it, id) }
@@ -32,27 +32,27 @@ class MemberInqueryServiceImpl(
         return filteredMembers
     }
 
-    private fun filterMembersById(members: List<MemberElasticsearch>, id: Long?): List<MemberElasticsearch> {
+    private fun filterMembersById(members: List<Member>, id: Long?): List<Member> {
         return if (id == null) members else members.filter { it.id == id }
     }
 
-    private fun filterMembersByStay(members: List<MemberElasticsearch>, stay: Boolean?): List<MemberElasticsearch> {
+    private fun filterMembersByStay(members: List<Member>, stay: Boolean?): List<Member> {
         return if (stay == null) members else members.filter { it.stay == stay }
     }
 
-    private fun filterMembersByFloor(members: List<MemberElasticsearch>, floor: Int?): List<MemberElasticsearch> {
+    private fun filterMembersByFloor(members: List<Member>, floor: Int?): List<Member> {
         return if (floor == null) members else members.filter { it.floor == floor }
     }
 
-    private fun filterMembersByRoom(members: List<MemberElasticsearch>, room: Int?): List<MemberElasticsearch> {
+    private fun filterMembersByRoom(members: List<Member>, room: Int?): List<Member> {
         return if (room == null) members else members.filter { it.room == room }
     }
 
-    private fun filterMembersByGrade(members: List<MemberElasticsearch>, grade: Int?): List<MemberElasticsearch> {
+    private fun filterMembersByGrade(members: List<Member>, grade: Int?): List<Member> {
         return if (grade == null) members else members.filter { it.grade == grade }
     }
 
-    private fun filterMembersByClassNum(members: List<MemberElasticsearch>, classNum: Int?): List<MemberElasticsearch> {
+    private fun filterMembersByClassNum(members: List<Member>, classNum: Int?): List<Member> {
         return if (classNum == null) members else members.filter { it.classNum == classNum }
     }
 }

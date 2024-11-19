@@ -3,10 +3,8 @@ package rainbowfriends.daramserverv2
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
-import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories
 
 @SpringBootApplication
-@EnableElasticsearchRepositories(basePackages = ["rainbowfriends.daramserverv2.global.member.repository"])
 @EntityScan(
     basePackages = [
         "rainbowfriends.daramserverv2.global.security.key.entity",
