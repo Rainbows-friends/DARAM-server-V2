@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import rainbowfriends.daramserverv2.domain.auth.exception.NoTokenException
 import rainbowfriends.daramserverv2.domain.auth.exception.TokenNotFoundException
+import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdException
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
 import rainbowfriends.daramserverv2.global.checkin.exception.DateCalculationException
@@ -81,6 +82,16 @@ class GlobalExceptionHandler {
         val errorResponse = ErrorResponse(
             code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
             message = "Date calculation failed",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
+    @ExceptionHandler(InvalidStudentIdException::class)
+    fun handleInvalidStudentIdException(ex: InvalidStudentIdException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            message = "Invalid student id",
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
