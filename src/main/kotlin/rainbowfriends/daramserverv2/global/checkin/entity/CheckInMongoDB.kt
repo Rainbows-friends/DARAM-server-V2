@@ -8,8 +8,9 @@ import java.time.LocalDate
 
 @Document(collection = "checkin")
 data class CheckInMongoDB(
-    @Id val id: String = "",
-    @DBRef val user: Member,
+    @Id var id: String? = "",
+    var userName: String,
+    var studentId: Short,
     var checkinStatus: Boolean,
-    val checkinDate: LocalDate
+    var checkinDate: LocalDate
 )
