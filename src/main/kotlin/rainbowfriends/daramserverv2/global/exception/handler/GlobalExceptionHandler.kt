@@ -10,6 +10,7 @@ import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdExce
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
 import rainbowfriends.daramserverv2.global.checkin.exception.DateCalculationException
+import rainbowfriends.daramserverv2.global.checkin.exception.LateNumberRaiseFailException
 import rainbowfriends.daramserverv2.global.exception.dto.ErrorResponse
 import rainbowfriends.daramserverv2.global.exception.dto.enums.ErrorStatus
 import rainbowfriends.daramserverv2.global.security.exception.TokenFormatException
@@ -92,6 +93,16 @@ class GlobalExceptionHandler {
         val errorResponse = ErrorResponse(
             code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
             message = "Invalid student id",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
+    @ExceptionHandler(LateNumberRaiseFailException::class)
+    fun handleLateNumberRaiseFailException(ex: LateNumberRaiseFailException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            message = "Late number raise fail",
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
