@@ -1,10 +1,15 @@
 package rainbowfriends.daramserverv2.global.checkin.repository
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import rainbowfriends.daramserverv2.global.checkin.entity.CheckIn
 import java.time.LocalDate
 
 interface CheckInRepository : JpaRepository<CheckIn, Long> {
+    @EntityGraph(attributePaths = ["user"])
+    override fun findAll(pageable: Pageable): Page<CheckIn>
     fun findByUserId(userId: Long): List<CheckIn>
     fun findByUserIdAndCheckinDate(user_id: Long, checkinDate: LocalDate): CheckIn?
     fun findByCheckinDate(checkinDate: LocalDate): List<CheckIn>
