@@ -8,7 +8,6 @@ import java.time.LocalDate
 
 @Repository
 interface CheckInMongoDBRepository : MongoRepository<CheckInMongoDB, String> {
-    fun findByUser(user: Member): CheckInMongoDB?
     fun findByCheckinDate(checkinDate: LocalDate): List<CheckInMongoDB>
     fun findByCheckinStatus(checkinStatus: Boolean): List<CheckInMongoDB>
     fun findByCheckinDateAndCheckinStatus(checkinDate: LocalDate, checkinStatus: Boolean): List<CheckInMongoDB>
