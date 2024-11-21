@@ -10,10 +10,10 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 
 @Component
-class CheckInDataManger(
+class CheckInDataScheduler(
     private val checkInRepository: CheckInRepository,
     private val checkInMongoDBRepository: CheckInMongoDBRepository,
-    private val lateNumberRaise: LateNumberRaise,
+    private val lateNumberUpdater: LateNumberUpdater,
     private val checkInPreparation: CheckInPreparation
 ) {
 
@@ -40,6 +40,6 @@ class CheckInDataManger(
             return
         }
         checkInPreparation.prepareCheckInsForDate(tomorrow)
-        lateNumberRaise.lateNumberRaise(today)
+        lateNumberUpdater.lateNumberRaise(today)
     }
 }
