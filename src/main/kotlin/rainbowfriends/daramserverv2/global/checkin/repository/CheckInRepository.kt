@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 
 import org.springframework.stereotype.Repository
 import rainbowfriends.daramserverv2.global.checkin.entity.CheckIn
+import rainbowfriends.daramserverv2.global.member.entity.Member
 import java.time.LocalDate
 
 @Repository
@@ -22,6 +23,7 @@ interface CheckInRepository : JpaRepository<CheckIn, Long> {
     @Modifying
     @Query("DELETE FROM CheckIn WHERE checkinDate < :cutoffDate")
     fun deleteCheckInsBeforeDate(@Param("cutoffDate") cutoffDate: LocalDate): Int
+    fun findByUserAndCheckinDate(user: Member, checkinDate: LocalDate): CheckIn
     fun findByCheckinDate(checkinDate: LocalDate): List<CheckIn>
     fun findByCheckinDateBetween(checkinDate: LocalDate, checkinDate2: LocalDate): List<CheckIn>
     fun findByCheckinDateBetweenAndUserId(checkinDate: LocalDate, checkinDate2: LocalDate, user_id: Long): List<CheckIn>
