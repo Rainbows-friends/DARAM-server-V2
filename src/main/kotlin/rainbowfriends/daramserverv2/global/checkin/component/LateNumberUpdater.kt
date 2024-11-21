@@ -9,7 +9,7 @@ import rainbowfriends.daramserverv2.global.member.repository.MemberRepository
 import java.time.LocalDate
 
 @Component
-class LateNumberRaise(
+class LateNumberUpdater(
     private val checkInRepository: CheckInRepository,
     private val memberRepository: MemberRepository
 ) {
