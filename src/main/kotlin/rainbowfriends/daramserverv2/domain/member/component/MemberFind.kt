@@ -9,9 +9,9 @@ import rainbowfriends.daramserverv2.global.member.repository.MemberRepository
 @Component
 class MemberFind(private val memberRepository: MemberRepository) {
     @Cacheable(value = ["allMembers"], key = "'allMembers'")
-    fun findMemberByElasticsearch(): List<Member> {
+    fun findMemberByCache(): List<Member> {
         if (memberRepository.count() <= 0) {
-            throw MemberNotFoundException("Elasticsearch is empty")
+            throw MemberNotFoundException("Member Not Found")
         }
         return memberRepository.findAll().toList()
     }

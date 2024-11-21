@@ -18,7 +18,7 @@ class MemberInqueryServiceImpl(
         grade: Int?,
         classNum: Int?
     ): List<Member> {
-        val allMembers = memberFind.findMemberByElasticsearch()
+        val allMembers = memberFind.findMemberByCache()
         val filteredMembers = allMembers
             .let { filterMembersById(it, id) }
             .let { filterMembersByStay(it, stay) }
