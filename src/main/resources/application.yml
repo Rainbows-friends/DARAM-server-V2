@@ -3,7 +3,7 @@ spring:
     name: DARAM-server-V2
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:${DB_TYPE:mariadb}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:daram}
+    url: jdbc:${DB_TYPE:mariadb}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:daram}?serverTimezone=KST
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:123456}
   jpa:
@@ -17,6 +17,9 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
         order_updates: true
         default_batch_fetch_size: 100
+        use_sql_comments: true
+        hibernate.type:
+          print: true
     generate-ddl: true
   data:
     mongodb:
