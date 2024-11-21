@@ -9,6 +9,7 @@ import rainbowfriends.daramserverv2.domain.auth.exception.TokenNotFoundException
 import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdException
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
+import rainbowfriends.daramserverv2.global.checkin.exception.CheckInStatusSwitchException
 import rainbowfriends.daramserverv2.global.checkin.exception.DateCalculationException
 import rainbowfriends.daramserverv2.global.checkin.exception.LateNumberRaiseFailException
 import rainbowfriends.daramserverv2.global.exception.dto.ErrorResponse
@@ -103,6 +104,16 @@ class GlobalExceptionHandler {
         val errorResponse = ErrorResponse(
             code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
             message = "Late number raise fail",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
+    @ExceptionHandler(CheckInStatusSwitchException::class)
+    fun handleCheckInStatusSwitchException(ex: CheckInStatusSwitchException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            message = "CheckIn status switch failed",
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
