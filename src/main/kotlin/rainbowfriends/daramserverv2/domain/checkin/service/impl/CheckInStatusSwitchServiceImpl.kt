@@ -12,7 +12,7 @@ class CheckInStatusSwitchServiceImpl(private val checkInStatusSwitch: CheckInSta
     override fun switchCheckInStatus(request: CheckInStatusSwitchRequest) {
         if (!checkInStatusSwitch.switchCheckInStatus(
             date = LocalDate.now(),
-            studentId = request.StudentId
+            studentId = request.studentId
         )){
             throw CheckInStatusSwitchException("CheckIn Status Switch Failed")
         }
