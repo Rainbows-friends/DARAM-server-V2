@@ -1,7 +1,7 @@
 package rainbowfriends.daramserverv2.domain.checkin.service
 
-import rainbowfriends.daramserverv2.global.checkin.entity.CheckInMongoDB
+import rainbowfriends.daramserverv2.global.checkin.entity.CheckIn
 
 interface CheckedInMemberService {
-    fun getCheckedInMember(): List<CheckInMongoDB>
+    fun getCheckedInMember(): List<CheckIn>
 }
