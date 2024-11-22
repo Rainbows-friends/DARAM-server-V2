@@ -53,9 +53,7 @@ class CheckInDataSync(
     @EventListener(ApplicationReadyEvent::class)
     fun syncCheckInOnStartUp() {
         retryTemplate.execute<Void, Exception> {
-            if (checkInMongoDBRepository.count() > 0) {
-                checkInMongoDBRepository.deleteAll()
-            }
+            checkInMongoDBRepository.deleteAll()
             var page = 0
             var checkIns: List<CheckIn>
             do {
