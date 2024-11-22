@@ -1,0 +1,10 @@
+singleServerConfig:
+  connectionMinimumIdleSize: 10
+  connectionPoolSize: 50
+  idleConnectionTimeout: 10000
+  connectTimeout: 10000
+  timeout: 3000
+  retryAttempts: 3
+  retryInterval: 1500
+threads: 4
+nettyThreads: 4

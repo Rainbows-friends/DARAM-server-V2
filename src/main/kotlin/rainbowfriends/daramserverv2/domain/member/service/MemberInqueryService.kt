@@ -1,6 +1,6 @@
 package rainbowfriends.daramserverv2.domain.member.service
 
-import rainbowfriends.daramserverv2.global.member.entity.MemberElasticsearch
+import rainbowfriends.daramserverv2.global.member.entity.Member
 
 interface MemberInqueryService {
     fun getAllMember(
@@ -10,5 +10,5 @@ interface MemberInqueryService {
         room: Int?,
         grade: Int?,
         classNum: Int?
-    ): List<MemberElasticsearch>
+    ): List<Member>
 }

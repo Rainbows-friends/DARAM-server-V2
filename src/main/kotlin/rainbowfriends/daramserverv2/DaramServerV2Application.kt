@@ -3,10 +3,10 @@ package rainbowfriends.daramserverv2
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
-import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication
-@EnableElasticsearchRepositories(basePackages = ["rainbowfriends.daramserverv2.global.member.repository"])
 @EntityScan(
     basePackages = [
         "rainbowfriends.daramserverv2.global.security.key.entity",
@@ -15,6 +15,8 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
         "rainbowfriends.daramserverv2.global.checkin.entity"
     ]
 )
+@EnableMongoRepositories(basePackages = ["rainbowfriends.daramserverv2.global.checkin.repository"])
+@EnableScheduling
 class DaramServerV2Application
 
 fun main(args: Array<String>) {

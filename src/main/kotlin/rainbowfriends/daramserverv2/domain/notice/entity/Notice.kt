@@ -6,7 +6,7 @@ import rainbowfriends.daramserverv2.global.member.enums.Roles
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "notice")
+@Table(name = "notice_table")
 data class Notice(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?,
