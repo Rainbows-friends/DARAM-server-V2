@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration
 class CacheConfig {
     @Bean
     fun cacheManager(): CaffeineCacheManager {
-        val cacheManager = CaffeineCacheManager("allMembers", "MemberByName")
+        val cacheManager = CaffeineCacheManager("allMembers", "MemberByName", "MemberByStudentId")
         cacheManager.setCaffeine(
             newBuilder()
                 .maximumSize(1000)
