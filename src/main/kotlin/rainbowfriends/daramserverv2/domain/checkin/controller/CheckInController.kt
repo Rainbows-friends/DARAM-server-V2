@@ -8,7 +8,7 @@ import rainbowfriends.daramserverv2.domain.checkin.dto.request.CheckInStatusSwit
 import rainbowfriends.daramserverv2.domain.checkin.service.CheckInStatusSwitchService
 import rainbowfriends.daramserverv2.domain.checkin.service.CheckedInMemberService
 import rainbowfriends.daramserverv2.domain.checkin.service.MissedCheckInMemberService
-import rainbowfriends.daramserverv2.global.checkin.entity.CheckInMongoDB
+import rainbowfriends.daramserverv2.global.checkin.entity.CheckIn
 
 @RestController
 @RequestMapping("/checkin")
@@ -20,13 +20,13 @@ class CheckInController(
 ) {
     @Operation(summary = "입실 상태 학생 조회", description = "입실 상태인 학생을 조회합니다")
     @GetMapping("/checkin")
-    fun getCheckInMember(): List<CheckInMongoDB> {
+    fun getCheckInMember(): List<CheckIn> {
         return checkedInMemberService.getCheckedInMember()
     }
 
     @Operation(summary = "미입실 상태 학생 조회", description = "미입실 상태인 학생을 조회합니다")
     @GetMapping("/uncheckin")
-    fun getUnCheckInMember(): List<CheckInMongoDB> {
+    fun getUnCheckInMember(): List<CheckIn> {
         return missedCheckInMemberService.getMissedCheckInMember()
     }
 
