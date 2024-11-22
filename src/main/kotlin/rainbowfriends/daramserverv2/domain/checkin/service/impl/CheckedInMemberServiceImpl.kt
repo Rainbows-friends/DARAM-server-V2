@@ -14,7 +14,7 @@ class CheckedInMemberServiceImpl(
     private val checkInMemberQuery: CheckInMemberQuery
 ) : CheckedInMemberService {
     override fun getCheckedInMember(): List<CheckIn> {
-        val checkInData: List<CheckInMongoDB> = checkInMemberQuery.getCheckInMember(
+        val checkInData: List<CheckInMongoDB> = checkInMemberQuery.getCheckInMemberWithLock(
             GetCheckInComponentAction.GET_CHECKED_IN_MEMBER,
             LocalDate.now()
         )

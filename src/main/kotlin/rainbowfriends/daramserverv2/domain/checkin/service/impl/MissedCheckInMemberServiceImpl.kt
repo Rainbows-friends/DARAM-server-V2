@@ -12,7 +12,7 @@ import java.time.LocalDate
 @Service
 class MissedCheckInMemberServiceImpl(private val checkInMemberQuery: CheckInMemberQuery) : MissedCheckInMemberService {
     override fun getMissedCheckInMember(): List<CheckIn> {
-        val checkInData: List<CheckInMongoDB> = checkInMemberQuery.getCheckInMember(
+        val checkInData: List<CheckInMongoDB> = checkInMemberQuery.getCheckInMemberWithLock(
             GetCheckInComponentAction.GET_MISSED_CHECK_IN_MEMBER,
             LocalDate.now()
         )

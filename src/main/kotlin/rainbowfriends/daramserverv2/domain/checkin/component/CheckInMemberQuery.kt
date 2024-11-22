@@ -7,20 +7,31 @@ import rainbowfriends.daramserverv2.global.checkin.entity.CheckInMongoDB
 import rainbowfriends.daramserverv2.global.checkin.repository.CheckInMongoDBRepository
 import rainbowfriends.daramserverv2.global.member.entity.Member
 import rainbowfriends.daramserverv2.global.member.repository.MemberRepository
+import rainbowfriends.daramserverv2.global.redis.redisson.util.DistributedLock
 import java.time.LocalDate
 
 @Component
 class CheckInMemberQuery(
     private val checkInMongoDBRepository: CheckInMongoDBRepository,
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val distributedLock: DistributedLock
 ) {
-    fun getCheckInMember(action: GetCheckInComponentAction, date: LocalDate): List<CheckInMongoDB> {
-        if (action == GetCheckInComponentAction.GET_CHECKED_IN_MEMBER) {
-            return checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, true)
-        } else if (action == GetCheckInComponentAction.GET_MISSED_CHECK_IN_MEMBER) {
-            return checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, false)
+
+    fun getCheckInMemberWithLock(action: GetCheckInComponentAction, date: LocalDate): List<CheckInMongoDB> {
+        val lockKey = "check-in-lock:$date"
+        return distributedLock.executeWithLock(lockKey, 5L, 10L) {
+            getCheckInMember(action, date)
         }
-        return checkInMongoDBRepository.findAll()
+    }
+
+    private fun getCheckInMember(action: GetCheckInComponentAction, date: LocalDate): List<CheckInMongoDB> {
+        return when (action) {
+            GetCheckInComponentAction.GET_CHECKED_IN_MEMBER ->
+                checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, true)
+            GetCheckInComponentAction.GET_MISSED_CHECK_IN_MEMBER ->
+                checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, false)
+            else -> checkInMongoDBRepository.findAll()
+        }
     }
 
     fun getMemberInfo(studentId: Short): Member {
