@@ -38,10 +38,6 @@ spring:
       max-request-size: 10MB
   cache:
     type: caffeine
-  elasticsearch:
-    username: ${ES_USERNAME:elastic}
-    password: ${ES_PASSWORD:changeme}
-    uris: ${ES_URI:http://localhost:9200}
 logging:
   level:
     root: info
