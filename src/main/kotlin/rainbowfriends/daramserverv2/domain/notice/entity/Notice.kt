@@ -17,5 +17,5 @@ data class Notice(
     @Column(nullable = false)
     var author: Roles,
     @Column(nullable = false)
-    var createdAt: LocalDateTime,
+    var createdAt: LocalDateTime
 )
