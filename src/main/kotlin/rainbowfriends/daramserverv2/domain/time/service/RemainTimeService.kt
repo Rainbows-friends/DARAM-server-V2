@@ -1,8 +1,7 @@
 package rainbowfriends.daramserverv2.domain.time.service
 
-import org.springframework.http.ResponseEntity
-import rainbowfriends.daramserverv2.domain.time.dto.enums.ResponseType
+import rainbowfriends.daramserverv2.domain.time.dto.enums.GetRemainTimeServiceAction
 
 interface RemainTimeService {
-    fun getRemainTime(responseType: ResponseType): Any
+    fun getRemainTime(getRemainTimeServiceAction: GetRemainTimeServiceAction): Any
 }

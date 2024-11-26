@@ -1,7 +1,7 @@
 package rainbowfriends.daramserverv2.domain.time.service.impl
 
 import org.springframework.stereotype.Service
-import rainbowfriends.daramserverv2.domain.time.dto.enums.ResponseType
+import rainbowfriends.daramserverv2.domain.time.dto.enums.GetRemainTimeServiceAction
 import rainbowfriends.daramserverv2.domain.time.dto.response.DetailedTimeResponse
 import rainbowfriends.daramserverv2.domain.time.dto.response.SecondsResponse
 import rainbowfriends.daramserverv2.domain.time.dto.response.TimeFormattedResponse
@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 
 @Service
 class RemainTimeServiceImpl : RemainTimeService {
-    override fun getRemainTime(responseType: ResponseType): Any {
+    override fun getRemainTime(getRemainTimeServiceAction: GetRemainTimeServiceAction): Any {
         val nowTime = LocalDateTime.now()
         val weekdayLimitTime = LocalDateTime.of(nowTime.year, nowTime.month, nowTime.dayOfMonth, 21, 30, 0)
         val sundayTimes = listOf(
@@ -27,15 +27,15 @@ class RemainTimeServiceImpl : RemainTimeService {
             else -> if (nowTime.isAfter(weekdayLimitTime)) weekdayLimitTime.plusDays(1) else weekdayLimitTime
         }
         val duration = Duration.between(nowTime, adjustedLimitTime)
-        return when (responseType) {
-            ResponseType.HOURS_MINUTES_SECONDS -> {
+        return when (getRemainTimeServiceAction) {
+            GetRemainTimeServiceAction.HOURS_MINUTES_SECONDS -> {
                 val hours = duration.toHours()
                 val minutes = duration.minusHours(hours).toMinutes()
                 val seconds = duration.seconds % 60
                 DetailedTimeResponse(adjustedLimitTime, hours, minutes, seconds)
             }
 
-            ResponseType.STRING_FORMAT -> {
+            GetRemainTimeServiceAction.STRING_FORMAT -> {
                 val hours = duration.toHours()
                 val minutes = duration.minusHours(hours).toMinutes()
                 val seconds = duration.seconds % 60
@@ -43,7 +43,7 @@ class RemainTimeServiceImpl : RemainTimeService {
                 TimeFormattedResponse(adjustedLimitTime, formattedTime)
             }
 
-            ResponseType.SECONDS_ONLY -> {
+            GetRemainTimeServiceAction.SECONDS_ONLY -> {
                 SecondsResponse(adjustedLimitTime, duration.seconds)
             }
         }
