@@ -1,6 +1,8 @@
 spring:
   application:
     name: DARAM-server-V2
+  jackson:
+    time-zone: Asia/Seoul
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:${DB_TYPE:mariadb}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:daram}?serverTimezone=KST
