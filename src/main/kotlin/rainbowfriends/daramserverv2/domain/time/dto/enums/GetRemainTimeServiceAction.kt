@@ -1,10 +1,10 @@
 package rainbowfriends.daramserverv2.domain.time.dto.enums
 
-enum class ResponseType {
+enum class GetRemainTimeServiceAction {
     HOURS_MINUTES_SECONDS, STRING_FORMAT, SECONDS_ONLY;
 
     companion object {
-        fun from(value: String): ResponseType {
+        fun from(value: String): GetRemainTimeServiceAction {
             return valueOf(value.replace("-", "_").uppercase())
         }
     }

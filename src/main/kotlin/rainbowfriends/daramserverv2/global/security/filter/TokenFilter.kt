@@ -18,7 +18,8 @@ class TokenFilter(private val tokenService: TokenService) : Filter {
             httpRequest.requestURI.startsWith("/api/v2/graphql") ||
             httpRequest.requestURI.startsWith("/api/v2/member") ||
             httpRequest.requestURI == "/api/v2/checkin/checkin" ||
-            httpRequest.requestURI == "/api/v2/checkin/uncheckin"
+            httpRequest.requestURI == "/api/v2/checkin/uncheckin" ||
+            (httpRequest.requestURI.startsWith("/api/v2/notice") && httpRequest.method == "GET")
         ) {
             chain!!.doFilter(request, response)
             return
@@ -31,7 +32,7 @@ class TokenFilter(private val tokenService: TokenService) : Filter {
                 return
             }
         }
-        httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+        httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN)
     }
 
     override fun init(filterConfig: FilterConfig?) {}

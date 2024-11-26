@@ -1,6 +1,6 @@
 package rainbowfriends.daramserverv2.domain.member.service
 
-import rainbowfriends.daramserverv2.global.member.entity.Member
+import rainbowfriends.daramserverv2.domain.member.dto.response.GetMemberResponse
 
 interface MemberInqueryService {
     fun getAllMember(
@@ -10,5 +10,5 @@ interface MemberInqueryService {
         room: Int?,
         grade: Int?,
         classNum: Int?
-    ): List<Member>
+    ): List<GetMemberResponse>
 }

@@ -9,6 +9,7 @@ import rainbowfriends.daramserverv2.domain.auth.exception.TokenNotFoundException
 import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdException
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
+import rainbowfriends.daramserverv2.domain.notice.exception.PatchNoticeRequestException
 import rainbowfriends.daramserverv2.global.checkin.exception.CheckInStatusSwitchException
 import rainbowfriends.daramserverv2.global.checkin.exception.DateCalculationException
 import rainbowfriends.daramserverv2.global.checkin.exception.LateNumberRaiseFailException
@@ -117,5 +118,15 @@ class GlobalExceptionHandler {
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
+    @ExceptionHandler(PatchNoticeRequestException::class)
+    fun handlePatchNoticeRequestException(ex: PatchNoticeRequestException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.BAD_REQUEST.value(),
+            message = "Patch Notice Request is invalid",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
     }
 }
