@@ -15,7 +15,8 @@ class CorsConfig(
     fun configureCors(): UrlBasedCorsConfigurationSource {
         val config = CorsConfiguration().apply {
             allowCredentials = true
-            allowedOrigins = listOf("http://localhost:8080", productionUrl)
+            allowedOrigins =
+                listOf("http://localhost:5173", "http://localhost:8080", "https://daram-gsm.kro.kr", productionUrl)
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
         }
