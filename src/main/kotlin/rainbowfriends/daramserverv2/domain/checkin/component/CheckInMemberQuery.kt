@@ -1,7 +1,8 @@
 package rainbowfriends.daramserverv2.domain.checkin.component
 
 import org.springframework.stereotype.Component
-import rainbowfriends.daramserverv2.domain.checkin.dto.GetCheckInComponentAction
+import org.springframework.transaction.annotation.Transactional
+import rainbowfriends.daramserverv2.domain.checkin.dto.enums.GetCheckInComponentAction
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.global.checkin.entity.CheckInMongoDB
 import rainbowfriends.daramserverv2.global.checkin.repository.CheckInMongoDBRepository
@@ -28,12 +29,13 @@ class CheckInMemberQuery(
         return when (action) {
             GetCheckInComponentAction.GET_CHECKED_IN_MEMBER ->
                 checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, true)
+
             GetCheckInComponentAction.GET_MISSED_CHECK_IN_MEMBER ->
                 checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, false)
-            else -> checkInMongoDBRepository.findAll()
         }
     }
 
+    @Transactional
     fun getMemberInfo(studentId: Short): Member {
         studentId.toString().let {
             val grade = it[0].toString().toInt()
