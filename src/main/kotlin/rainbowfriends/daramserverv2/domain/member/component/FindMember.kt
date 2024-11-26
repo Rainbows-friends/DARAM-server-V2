@@ -7,7 +7,7 @@ import rainbowfriends.daramserverv2.global.member.entity.Member
 import rainbowfriends.daramserverv2.global.member.repository.MemberRepository
 
 @Component
-class MemberFind(private val memberRepository: MemberRepository) {
+class FindMember(private val memberRepository: MemberRepository) {
     @Cacheable(value = ["allMembers"], key = "'allMembers'")
     fun findMemberByCache(): List<Member> {
         if (memberRepository.count() <= 0) {
