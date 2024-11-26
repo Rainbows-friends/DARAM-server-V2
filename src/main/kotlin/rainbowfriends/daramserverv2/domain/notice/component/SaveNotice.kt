@@ -1,19 +1,17 @@
 package rainbowfriends.daramserverv2.domain.notice.component
 
 import org.springframework.stereotype.Component
-import rainbowfriends.daramserverv2.domain.notice.dto.request.CreateOrUpdateNoticeRequest
+import rainbowfriends.daramserverv2.domain.notice.dto.request.PostNoticeRequest
+import rainbowfriends.daramserverv2.domain.notice.dto.response.NoticeResponse
 import rainbowfriends.daramserverv2.domain.notice.entity.Notice
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
 import rainbowfriends.daramserverv2.domain.notice.repository.NoticeRepository
 import rainbowfriends.daramserverv2.global.member.enums.Roles
-import rainbowfriends.daramserverv2.global.security.token.TokenService
 import java.time.LocalDateTime
 
 @Component
-class SaveNotice(
-    private val noticeRepository: NoticeRepository, private val tokenService: TokenService
-) {
-    fun saveNotice(request: CreateOrUpdateNoticeRequest, role: Roles): Notice {
+class SaveNotice(private val noticeRepository: NoticeRepository) {
+    fun saveNotice(request: PostNoticeRequest, role: Roles): NoticeResponse {
         val notice = Notice(
             id = null,
             title = request.title,
@@ -26,6 +24,14 @@ class SaveNotice(
                 throw DuplicateNoticeException("notice already exists")
             }
         }
-        return noticeRepository.save(notice)
+        return noticeRepository.save(notice).let {
+            NoticeResponse(
+                id = it.id,
+                title = it.title,
+                context = it.context,
+                author = it.author,
+                createdAt = it.createdAt
+            )
+        }
     }
 }
