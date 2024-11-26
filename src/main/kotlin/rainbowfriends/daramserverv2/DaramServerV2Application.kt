@@ -1,6 +1,5 @@
 package rainbowfriends.daramserverv2
 
-import jakarta.annotation.PostConstruct
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
@@ -17,19 +16,11 @@ import java.util.*
         "rainbowfriends.daramserverv2.global.checkin.entity"
     ]
 )
-@EnableMongoRepositories(basePackages = ["rainbowfriends.daramserverv2.global.checkin.repository"])
 @EnableScheduling
+@EnableMongoRepositories(basePackages = ["rainbowfriends.daramserverv2.global.checkin.repository"])
 class DaramServerV2Application
 
 fun main(args: Array<String>) {
+    TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))
     runApplication<DaramServerV2Application>(*args)
-    @PostConstruct
-    fun init() {
-        var timeZone = System.getenv("TZ");
-        if (timeZone == null || timeZone.isEmpty()) {
-            timeZone = "Asia/Seoul";
-        }
-        TimeZone.setDefault(TimeZone.getTimeZone(timeZone));
-        System.out.println("Application running with timezone: " + timeZone);
-    }
 }
