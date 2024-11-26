@@ -5,10 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import rainbowfriends.daramserverv2.domain.checkin.dto.request.CheckInStatusSwitchRequest
+import rainbowfriends.daramserverv2.domain.checkin.dto.response.GetCheckInResponse
 import rainbowfriends.daramserverv2.domain.checkin.service.CheckInStatusSwitchService
 import rainbowfriends.daramserverv2.domain.checkin.service.CheckedInMemberService
 import rainbowfriends.daramserverv2.domain.checkin.service.MissedCheckInMemberService
-import rainbowfriends.daramserverv2.global.checkin.entity.CheckIn
 
 @RestController
 @RequestMapping("/checkin")
@@ -20,13 +20,13 @@ class CheckInController(
 ) {
     @Operation(summary = "입실 상태 학생 조회", description = "입실 상태인 학생을 조회합니다")
     @GetMapping("/checkin")
-    fun getCheckInMember(): List<CheckIn> {
+    fun getCheckInMember(): List<GetCheckInResponse> {
         return checkedInMemberService.getCheckedInMember()
     }
 
     @Operation(summary = "미입실 상태 학생 조회", description = "미입실 상태인 학생을 조회합니다")
     @GetMapping("/uncheckin")
-    fun getUnCheckInMember(): List<CheckIn> {
+    fun getUnCheckInMember(): List<GetCheckInResponse> {
         return missedCheckInMemberService.getMissedCheckInMember()
     }
 
