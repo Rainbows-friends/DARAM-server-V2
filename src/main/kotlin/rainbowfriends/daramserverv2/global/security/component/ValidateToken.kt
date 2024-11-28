@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Component
 import rainbowfriends.daramserverv2.global.redis.RedisUtil
 
+@Deprecated(message = "Use JwtTokenService instead")
 @Component
 @Transactional
 class ValidateToken(private val redisUtil: RedisUtil) {

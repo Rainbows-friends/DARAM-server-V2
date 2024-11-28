@@ -10,6 +10,7 @@ import rainbowfriends.daramserverv2.global.security.component.ValidateToken
 import rainbowfriends.daramserverv2.global.security.dto.TokenResponse
 import rainbowfriends.daramserverv2.global.security.token.TokenService
 
+@Deprecated(message = "Use JwtTokenService instead")
 @Service
 class TokenServiceImpl(
     private val generateToken: GenerateToken,

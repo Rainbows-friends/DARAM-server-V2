@@ -20,6 +20,8 @@ import java.security.InvalidKeyException
 
 @ControllerAdvice
 class GlobalExceptionHandler {
+
+    @Deprecated(message = "Exception handling for TokenService is deprecated")
     @ExceptionHandler(TokenFormatException::class)
     fun handleTokenFormatException(ex: TokenFormatException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
