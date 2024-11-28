@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import rainbowfriends.daramserverv2.domain.auth.dto.AuthorizeAdminRequest
+import rainbowfriends.daramserverv2.domain.auth.dto.request.SignInRequest
 import rainbowfriends.daramserverv2.domain.auth.service.AdminAuthorizationService
 import rainbowfriends.daramserverv2.domain.auth.service.LogoutService
 import rainbowfriends.daramserverv2.global.security.dto.TokenResponse
@@ -19,6 +20,7 @@ class AuthController(
 ) {
     @Operation(summary = "관리자 인증", description = "관리자 권한을 인가합니다")
     @PostMapping
+    @Deprecated(message = "Google OAuth2 Authorization use")
     fun authorizeAdmin(@RequestBody key: AuthorizeAdminRequest): TokenResponse {
         return adminAuthorizationService.authorizeAdmin(key.key)
     }
@@ -26,7 +28,14 @@ class AuthController(
     @Operation(summary = "로그아웃", description = "로그아웃합니다")
     @DeleteMapping
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    @Deprecated(message = "Google OAuth2 Authorization use")
     fun logout(request: HttpServletRequest) {
         logoutService.logout(request)
+    }
+
+    @Operation(summary = "로그인", description = "로그인합니다")
+    @PostMapping("/signin")
+    fun signIn(@RequestBody code: SignInRequest): TokenResponse {
+
     }
 }
