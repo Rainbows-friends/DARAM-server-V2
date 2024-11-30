@@ -4,18 +4,18 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import rainbowfriends.daramserverv2.domain.auth.exception.NoTokenException
-import rainbowfriends.daramserverv2.domain.auth.exception.TokenNotFoundException
+import rainbowfriends.daramserverv2.domain.auth.exception.*
 import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdException
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
+import rainbowfriends.daramserverv2.domain.notice.exception.NoticeNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.PatchNoticeRequestException
 import rainbowfriends.daramserverv2.global.checkin.exception.CheckInStatusSwitchException
 import rainbowfriends.daramserverv2.global.checkin.exception.DateCalculationException
 import rainbowfriends.daramserverv2.global.checkin.exception.LateNumberRaiseFailException
 import rainbowfriends.daramserverv2.global.exception.dto.ErrorResponse
 import rainbowfriends.daramserverv2.global.exception.dto.enums.ErrorStatus
-import rainbowfriends.daramserverv2.global.security.exception.TokenFormatException
+import rainbowfriends.daramserverv2.global.security.exception.*
 import java.security.InvalidKeyException
 
 @ControllerAdvice
@@ -32,6 +32,57 @@ class GlobalExceptionHandler {
         return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
     }
 
+    @ExceptionHandler(InvalidTokenFormatException::class)
+    fun handleInvalidTokenFormatException(ex: InvalidTokenFormatException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Token format is invalid",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(ExpiredTokenException::class)
+    fun handleExpiredTokenException(ex: ExpiredTokenException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Token is expired",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(ExpiredRefreshTokenException::class)
+    fun handleExpiredRefreshTokenException(ex: ExpiredRefreshTokenException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Refresh Token is expired",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(InvalidTokenException::class)
+    fun handleInvalidTokenException(ex: InvalidTokenException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Token is invalid",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException::class)
+    fun handleInvalidRefreshTokenException(ex: InvalidRefreshTokenException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Refresh Token is invalid",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
+
+    @Deprecated(message = "Exception handling for TokenService is deprecated")
     @ExceptionHandler(NoTokenException::class)
     fun handleNoTokenException(ex: NoTokenException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
@@ -42,6 +93,7 @@ class GlobalExceptionHandler {
         return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
     }
 
+    @Deprecated(message = "Exception handling for TokenService is deprecated")
     @ExceptionHandler(TokenNotFoundException::class)
     fun handleTokenNotFoundException(ex: TokenNotFoundException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
@@ -130,5 +182,55 @@ class GlobalExceptionHandler {
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(NoticeNotFoundException::class)
+    fun handleNoticeNotFoundException(ex: NoticeNotFoundException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.NOT_FOUND.value(),
+            message = "Notice is not found",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(EmailFormatException::class)
+    fun handleEmailFormatException(ex: EmailFormatException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.BAD_REQUEST.value(),
+            message = "Email format is invalid",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(InvalidCodeException::class)
+    fun handleInvalidCodeException(ex: InvalidCodeException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.BAD_REQUEST.value(),
+            message = "Invalid code",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(ReissueTokenException::class)
+    fun handleReissueTokenException(ex: ReissueTokenException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Reissue Token is invalid",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(RegenerateTokenFailedException::class)
+    fun handleRegenerateTokenFailedException(ex: RegenerateTokenFailedException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            message = "Regenerate Failed",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 }
