@@ -63,6 +63,11 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
+    // Google OAuth
+    implementation("com.google.api-client:google-api-client:1.34.0")
+    implementation("com.google.oauth-client:google-oauth-client-jetty:1.34.1")
+    implementation("com.google.http-client:google-http-client-gson:1.41.5")
+
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
