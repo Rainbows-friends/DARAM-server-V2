@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils
 import rainbowfriends.daramserverv2.global.security.token.TokenService
 import java.io.IOException
 
+@Deprecated(message = "Use JwtFilter instead")
 class TokenFilter(private val tokenService: TokenService) : Filter {
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {

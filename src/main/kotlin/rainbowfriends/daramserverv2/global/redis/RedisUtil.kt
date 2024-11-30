@@ -8,9 +8,8 @@ import java.util.concurrent.TimeUnit
 class RedisUtil(
     private val redisTemplate: RedisTemplate<String, Any>
 ) {
-
     fun set(key: String, value: Any, minutes: Int) {
-        redisTemplate.opsForValue().set(key, value, minutes.toLong(), TimeUnit.MINUTES)
+        redisTemplate.opsForValue().set(key, value, minutes.toLong(), TimeUnit.SECONDS)
     }
 
     fun get(key: String): Any? {

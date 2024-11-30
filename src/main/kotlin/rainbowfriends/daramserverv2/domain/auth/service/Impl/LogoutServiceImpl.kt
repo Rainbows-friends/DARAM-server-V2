@@ -6,6 +6,7 @@ import rainbowfriends.daramserverv2.domain.auth.exception.NoTokenException
 import rainbowfriends.daramserverv2.domain.auth.service.LogoutService
 import rainbowfriends.daramserverv2.global.security.token.TokenService
 
+@Deprecated(message = "Use JwtTokenService instead")
 @Service
 class LogoutServiceImpl(
     private val tokenService: TokenService

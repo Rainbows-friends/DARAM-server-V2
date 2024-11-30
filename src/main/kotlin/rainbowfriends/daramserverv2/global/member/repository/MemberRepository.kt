@@ -7,8 +7,8 @@ import rainbowfriends.daramserverv2.global.member.entity.Member
 
 @Repository
 interface MemberRepository : JpaRepository<Member, Long?> {
-    @Cacheable(value = ["MemberByName"], key = "#username")
-    fun findByName(username: String?): Member?
     @Cacheable(value = ["MemberByStudentId"], key = "#grade + #classNum + #number")
     fun findByGradeAndClassNumAndNumber(grade: Int, classNum: Int, number: Int): Member?
+    @Cacheable(value = ["MemberByEmail"], key = "#email")
+    fun findByEmail(email: String?): Member?
 }

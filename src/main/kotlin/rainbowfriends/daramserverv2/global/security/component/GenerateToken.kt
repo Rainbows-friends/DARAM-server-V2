@@ -10,6 +10,7 @@ import java.security.MessageDigest
 import java.security.SecureRandom
 import java.util.*
 
+@Deprecated(message = "Use JwtTokenService instead")
 @Component
 class GenerateToken(
     private val redisUtil: RedisUtil,

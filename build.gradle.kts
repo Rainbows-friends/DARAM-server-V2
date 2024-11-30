@@ -43,6 +43,7 @@ dependencies {
     implementation("org.redisson:redisson-spring-boot-starter:3.22.1")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 
     // Kotlin & Jackson
@@ -56,6 +57,16 @@ dependencies {
     // JAXB
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     implementation("org.glassfish.jaxb:jaxb-runtime:2.3.1")
+
+    // JSON Web Token
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    // Google OAuth
+    implementation("com.google.api-client:google-api-client:1.34.0")
+    implementation("com.google.oauth-client:google-oauth-client-jetty:1.34.1")
+    implementation("com.google.http-client:google-http-client-gson:1.41.5")
 
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")

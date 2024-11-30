@@ -8,6 +8,7 @@ import rainbowfriends.daramserverv2.global.security.key.component.VerifyKey
 import rainbowfriends.daramserverv2.global.security.token.TokenService
 import java.security.InvalidKeyException
 
+@Deprecated(message = "Use JwtTokenService instead")
 @Service
 class AdminAuthorizationServiceImpl(
     private val tokenService: TokenService,

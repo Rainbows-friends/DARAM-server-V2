@@ -1,14 +1,14 @@
 package rainbowfriends.daramserverv2.domain.member.service.impl
 
 import org.springframework.stereotype.Service
-import rainbowfriends.daramserverv2.domain.member.component.FindMember
+import rainbowfriends.daramserverv2.domain.member.component.FindAllMember
 import rainbowfriends.daramserverv2.domain.member.dto.response.GetMemberResponse
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.member.service.MemberInqueryService
 
 @Service
 class MemberInquiryServiceImpl(
-    private val findMember: FindMember
+    private val findAllMember: FindAllMember
 ) : MemberInqueryService {
 
     override fun getAllMember(
@@ -19,7 +19,7 @@ class MemberInquiryServiceImpl(
         grade: Int?,
         classNum: Int?
     ): List<GetMemberResponse> {
-        val allMembers = findMember.findMemberByCache().map {
+        val allMembers = findAllMember.findMemberByCache().map {
             GetMemberResponse(
                 id = it.id,
                 stay = it.stay,

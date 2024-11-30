@@ -37,14 +37,6 @@ class DomainAuthorizationConfig {
             .requestMatchers(
                 "/checkin"
             ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")
-            .requestMatchers(
-                "/auth",
-                "/time",
-                "/graphql",
-                "/checkin/checkin",
-                "/checkin/uncheckin",
-                "/member/**"
-            ).permitAll()
             .anyRequest().permitAll()
     }
 }
