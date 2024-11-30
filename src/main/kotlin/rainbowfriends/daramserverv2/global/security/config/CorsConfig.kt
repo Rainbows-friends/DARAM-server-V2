@@ -9,14 +9,22 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Component
 class CorsConfig(
     @Value("\${production.url}")
-    val productionUrl: String
+    val productionUrl: String,
+    @Value("\${production.front-url}")
+    val productionFrontUrl: String
 ) {
     @Bean
     fun configureCors(): UrlBasedCorsConfigurationSource {
         val config = CorsConfiguration().apply {
             allowCredentials = true
             allowedOrigins =
-                listOf("http://localhost:5173", "http://localhost:8080", "https://daram-gsm.kro.kr", productionUrl)
+                listOf(
+                    "http://localhost:5173",
+                    "http://localhost:8080",
+                    "https://daram-gsm.kro.kr",
+                    productionUrl,
+                    productionFrontUrl
+                )
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("Authorization", "Content-Type")
         }
