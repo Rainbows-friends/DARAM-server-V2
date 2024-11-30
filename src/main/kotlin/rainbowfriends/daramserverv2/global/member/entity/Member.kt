@@ -14,6 +14,8 @@ data class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = 0,
+    @Column(nullable = true, unique = true)
+    var email: String? = null,
     @Column(nullable = false)
     val name: String,
     @Column(nullable = false)
