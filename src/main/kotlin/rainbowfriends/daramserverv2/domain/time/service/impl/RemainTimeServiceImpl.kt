@@ -7,49 +7,78 @@ import rainbowfriends.daramserverv2.domain.time.dto.response.SecondsResponse
 import rainbowfriends.daramserverv2.domain.time.dto.response.TimeFormattedResponse
 import rainbowfriends.daramserverv2.domain.time.service.RemainTimeService
 import java.time.DayOfWeek
-import java.time.Duration
 import java.time.LocalDateTime
-import java.time.temporal.TemporalAdjusters
+import java.time.temporal.ChronoUnit
 
 @Service
 class RemainTimeServiceImpl : RemainTimeService {
+    private val weekdayDeadline = LocalDateTime.now().withHour(21).withMinute(30).withSecond(0).withNano(0)
+    private val sundayDeadlines = listOf(
+        LocalDateTime.now().withHour(20).withMinute(20).withSecond(0).withNano(0),
+        LocalDateTime.now().withHour(20).withMinute(40).withSecond(0).withNano(0),
+        LocalDateTime.now().withHour(21).withMinute(0).withSecond(0).withNano(0)
+    )
+    private val weekdayDeadlines = mapOf(
+        DayOfWeek.MONDAY to weekdayDeadline,
+        DayOfWeek.TUESDAY to weekdayDeadline,
+        DayOfWeek.WEDNESDAY to weekdayDeadline,
+        DayOfWeek.THURSDAY to weekdayDeadline
+    )
+
     override fun getRemainTime(getRemainTimeServiceAction: GetRemainTimeServiceAction): Any {
-        val nowTime = LocalDateTime.now()
-        val weekdayLimitTime = nowTime.withHour(21).withMinute(30).withSecond(0)
-        val nextWeekdayLimitTime = if (nowTime.isAfter(weekdayLimitTime)) {
-            weekdayLimitTime.plusDays(1)
-        } else {
-            weekdayLimitTime
-        }
-        val nextSunday = nowTime.with(TemporalAdjusters.next(DayOfWeek.SUNDAY))
-        val sundayTimes = listOf(
-            LocalDateTime.of(nextSunday.year, nextSunday.month, nextSunday.dayOfMonth, 20, 20, 0),
-            LocalDateTime.of(nextSunday.year, nextSunday.month, nextSunday.dayOfMonth, 20, 40, 0),
-            LocalDateTime.of(nextSunday.year, nextSunday.month, nextSunday.dayOfMonth, 21, 0, 0)
-        )
-        val adjustedLimitTime = when (nowTime.dayOfWeek) {
-            DayOfWeek.FRIDAY, DayOfWeek.SATURDAY -> sundayTimes[0]
-            DayOfWeek.SUNDAY -> sundayTimes.firstOrNull { it.isAfter(nowTime) }
-                ?: sundayTimes[0].plusWeeks(1)
-            else -> nextWeekdayLimitTime
-        }
-        val duration = Duration.between(nowTime, adjustedLimitTime)
+        val now = LocalDateTime.now()
+        val closestDeadline = findClosestDeadline(now)
+        val remainTime = ChronoUnit.SECONDS.between(now, closestDeadline)
         return when (getRemainTimeServiceAction) {
             GetRemainTimeServiceAction.HOURS_MINUTES_SECONDS -> {
-                val hours = duration.toHours()
-                val minutes = duration.minusHours(hours).toMinutes()
-                val seconds = duration.seconds % 60
-                DetailedTimeResponse(adjustedLimitTime, hours, minutes, seconds)
+                val hours = remainTime / 3600
+                val minutes = (remainTime % 3600) / 60
+                val seconds = remainTime % 60
+                DetailedTimeResponse(closestDeadline, hours, minutes, seconds)
             }
+
             GetRemainTimeServiceAction.STRING_FORMAT -> {
-                val hours = duration.toHours()
-                val minutes = duration.minusHours(hours).toMinutes()
-                val seconds = duration.seconds % 60
-                val formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-                TimeFormattedResponse(adjustedLimitTime, formattedTime)
+                val hours = remainTime / 3600
+                val minutes = (remainTime % 3600) / 60
+                val seconds = remainTime % 60
+                TimeFormattedResponse(closestDeadline, String.format("%02d:%02d:%02d", hours, minutes, seconds))
             }
+
             GetRemainTimeServiceAction.SECONDS_ONLY -> {
-                SecondsResponse(adjustedLimitTime, duration.seconds)
+                SecondsResponse(closestDeadline, remainTime)
+            }
+        }
+    }
+
+    private fun findClosestDeadline(now: LocalDateTime): LocalDateTime {
+        val dayOfWeek = now.dayOfWeek
+        return when (dayOfWeek) {
+            DayOfWeek.SUNDAY -> {
+                sundayDeadlines.minByOrNull { deadline ->
+                    ChronoUnit.SECONDS.between(now, deadline)
+                }?.takeIf { ChronoUnit.SECONDS.between(now, it) >= 0 }
+                    ?: LocalDateTime.now().plusDays(1).with(DayOfWeek.MONDAY).withHour(21).withMinute(30)
+            }
+
+            in listOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY) -> {
+                val targetDeadline = weekdayDeadline
+                if (ChronoUnit.SECONDS.between(now, targetDeadline) < 0) {
+                    targetDeadline.plusDays(1)
+                } else {
+                    targetDeadline
+                }
+            }
+
+            DayOfWeek.THURSDAY -> {
+                sundayDeadlines.first()
+            }
+
+            in listOf(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY) -> {
+                sundayDeadlines.first()
+            }
+
+            else -> {
+                LocalDateTime.now().plusDays(1).with(DayOfWeek.MONDAY).withHour(21).withMinute(30)
             }
         }
     }
