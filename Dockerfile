@@ -15,7 +15,7 @@ RUN ./gradlew clean build --no-daemon
 FROM openjdk:21-jdk-slim
 RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
 WORKDIR /app
-COPY --from=base /app/build/libs/your-app-name.jar /app/app.jar
+COPY --from=base /app/build/libs/DARAM-server-V2-0.0.1-SNAPSHOT.jar /app/app.jar
 RUN rm -rf /app/.gradle /app/build/tmp /root/.gradle
 USER appuser
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
