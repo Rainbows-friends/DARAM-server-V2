@@ -12,7 +12,8 @@ class DomainAuthorizationConfig {
             .requestMatchers(
                 HttpMethod.GET,
                 "/notice/all",
-                "/notice/{id}"
+                "/notice/{id}",
+                "/actuator/health"
             ).permitAll()
             .requestMatchers(
                 HttpMethod.POST,
