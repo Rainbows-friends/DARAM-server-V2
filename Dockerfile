@@ -10,11 +10,11 @@ RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
 WORKDIR /app
 COPY . /app
 RUN ./gradlew clean build --no-daemon
-FROM openjdk:21-jre-slim
+FROM openjdk:21-jdk-slim
 RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
-USER appuser
 WORKDIR /app
 COPY --from=base /app/build/libs/your-app-name.jar /app/app.jar
 RUN rm -rf /app/.gradle /app/build/tmp /root/.gradle
+USER appuser
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 EXPOSE 8080
