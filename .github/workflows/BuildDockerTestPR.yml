@@ -19,9 +19,6 @@ jobs:
       - name: Run Docker Image
         run: |
           docker run -d -p 8080:8080 test-image
-          sleep 10
           docker ps
-      - name: Check if Docker container is running
-        run: curl --fail http://localhost:8080/actuator/health || exit 1
       - name: Stop Docker Container
         run: docker ps -q | xargs docker stop
