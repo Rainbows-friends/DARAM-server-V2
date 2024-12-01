@@ -1,7 +1,6 @@
 name: Docker Build Test by Push
 on:
-  push:
-    branches: [ "main" ]
+  push: { branches: [ "main" ] }
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,21 +9,19 @@ jobs:
       - name: Set up Docker
         run: |
           sudo apt-get update
+          sudo apt-get remove --purge containerd containerd.io
           sudo apt-get install -y docker.io
           sudo systemctl enable --now docker
           sudo usermod -aG docker $USER
           docker --version
       - name: Build Docker Image
-        run: |
-          docker build -t test-image .
+        run: docker build -t test-image .
       - name: Run Docker Image
         run: |
           docker run -d -p 8080:8080 test-image
           sleep 10
           docker ps
       - name: Check if Docker container is running
-        run: |
-          curl --fail http://localhost:8080/actuator/health || exit 1
+        run: curl --fail http://localhost:8080/actuator/health || exit 1
       - name: Stop Docker Container
-        run: |
-          docker ps -q | xargs docker stop
+        run: docker ps -q | xargs docker stop
