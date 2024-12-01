@@ -23,7 +23,7 @@ class JwtFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        if(request.requestURI.startsWith("/api/v2/auth") || request.requestURI.startsWith("/api/v2/time")) {
+        if(request.requestURI.startsWith("/api/v2/auth") || request.requestURI.startsWith("/api/v2/time") || request.requestURI.equals("/api/v2/actuator/health")) {
             filterChain.doFilter(request, response)
             return
         }
