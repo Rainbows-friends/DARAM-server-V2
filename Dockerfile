@@ -1,22 +1,16 @@
-FROM openjdk:21-jdk-slim AS base
-RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    zip \
-    && curl -s https://get.sdkman.io | bash \
-    && /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install gradle" \
-    && ln -s /root/.sdkman/candidates/gradle/current/bin/gradle /usr/local/bin/gradle \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
+FROM openjdk:21-jdk-slim as base
 WORKDIR /app
+RUN apt-get update && apt-get install -y curl unzip zip \
+    && curl -s https://get.sdkman.io | bash \
+    && /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install gradle"
 COPY . /app
+RUN chmod +x ./gradlew
 RUN ./gradlew clean build --no-daemon
-FROM openjdk:21-jdk-slim
+FROM openjdk:21-jdk-slim as stage-1
 RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
 WORKDIR /app
 COPY --from=base /app/build/libs/DARAM-server-V2-0.0.1-SNAPSHOT.jar /app/app.jar
 RUN rm -rf /app/.gradle /app/build/tmp /root/.gradle
 USER appuser
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
