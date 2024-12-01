@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && curl -s https://get.sdkman.io | bash \
     && /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install gradle" \
+    && ln -s /root/.sdkman/candidates/gradle/current/bin/gradle /usr/local/bin/gradle \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
