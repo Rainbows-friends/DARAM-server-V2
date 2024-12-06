@@ -21,6 +21,6 @@ import java.util.*
 class DaramServerV2Application
 
 fun main(args: Array<String>) {
-    TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))
+
     runApplication<DaramServerV2Application>(*args)
 }
