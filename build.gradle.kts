@@ -71,6 +71,10 @@ dependencies {
     // JAVAX
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
+    // Jakarta
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+
     // Thymeleaf Extras
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 
