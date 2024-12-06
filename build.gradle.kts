@@ -68,9 +68,6 @@ dependencies {
     implementation("com.google.oauth-client:google-oauth-client-jetty:1.34.1")
     implementation("com.google.http-client:google-http-client-gson:1.41.5")
 
-    // Swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
-
     // JAVAX
     implementation("javax.servlet:javax.servlet-api:4.0.1")
 
