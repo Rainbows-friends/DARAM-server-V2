@@ -39,9 +39,8 @@ class RemainTimeServiceImpl : RemainTimeService {
     }
 
     private fun findClosestDeadline(now: LocalDateTime): LocalDateTime {
-        val deadlineConfig = DeadlineConfig(now)
-        val weekdayDeadline = deadlineConfig.getWeekdayDeadline()
-        val sundayDeadlines = deadlineConfig.getSundayDeadlines()
+        val weekdayDeadline = DeadlineConfig.getWeekdayDeadline(now)
+        val sundayDeadlines = DeadlineConfig.getSundayDeadlines(now)
         val dayOfWeek = now.dayOfWeek
         return when (dayOfWeek) {
             DayOfWeek.SUNDAY -> {
@@ -50,7 +49,6 @@ class RemainTimeServiceImpl : RemainTimeService {
                     .minByOrNull { ChronoUnit.SECONDS.between(now, it) }
                 nextDeadline ?: now.plusDays(1).withHour(21).withMinute(30).withSecond(0).withNano(0)
             }
-
             in listOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY) -> {
                 if (ChronoUnit.SECONDS.between(now, weekdayDeadline) < 0) {
                     weekdayDeadline.plusDays(1)
@@ -58,23 +56,19 @@ class RemainTimeServiceImpl : RemainTimeService {
                     weekdayDeadline
                 }
             }
-
             DayOfWeek.THURSDAY -> {
                 if (ChronoUnit.SECONDS.between(now, weekdayDeadline) < 0) {
-                    sundayDeadlines.first().plusDays(3)
+                    sundayDeadlines.first()
                 } else {
                     weekdayDeadline
                 }
             }
-
             DayOfWeek.FRIDAY -> {
-                sundayDeadlines.first().plusDays(2)
+                sundayDeadlines.first()
             }
-
             DayOfWeek.SATURDAY -> {
-                sundayDeadlines.first().plusDays(1)
+                sundayDeadlines.first()
             }
-
             else -> {
                 now.plusDays(1).withHour(21).withMinute(30).withSecond(0).withNano(0)
             }
