@@ -25,14 +25,18 @@ class CheckInMemberQuery(
         }
     }
 
-    private fun getCheckInMember(action: GetCheckInComponentAction, date: LocalDate): List<CheckInMongoDB> {
-        return when (action) {
-            GetCheckInComponentAction.GET_CHECKED_IN_MEMBER ->
-                checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, true)
-
-            GetCheckInComponentAction.GET_MISSED_CHECK_IN_MEMBER ->
-                checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, false)
+    private fun getCheckInMember(action: GetCheckInComponentAction, date: LocalDate): List<CheckInMongoDB> =
+        when (action) {
+            GetCheckInComponentAction.GET_CHECKED_IN_MEMBER -> getCheckInMember(date)
+            GetCheckInComponentAction.GET_MISSED_CHECK_IN_MEMBER -> getMissedCheckInMember(date)
         }
+
+    private fun getMissedCheckInMember(date: LocalDate): List<CheckInMongoDB> {
+        return checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, false)
+    }
+
+    private fun getCheckInMember(date: LocalDate): List<CheckInMongoDB> {
+        return checkInMongoDBRepository.findByCheckinDateAndCheckinStatus(date, true)
     }
 
     @Transactional

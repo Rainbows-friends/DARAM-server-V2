@@ -32,7 +32,6 @@ class DomainAuthorizationConfig {
                 "/notice/**"
             ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")
             .requestMatchers(
-                "/swagger-ui/**",
                 "/actuator/**"
             ).hasRole("DEVELOPER")
             .requestMatchers(

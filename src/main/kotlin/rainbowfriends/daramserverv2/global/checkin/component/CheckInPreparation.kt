@@ -21,7 +21,7 @@ class CheckInPreparation(
     fun prepareCheckInsForDate(date: LocalDate) {
         val allMember: List<Member> = memberRepository.findAll()
         if (checkInMongoDBRepository.findByCheckinDate(date).isEmpty()) {
-            val checkIns = allMember.map { member ->
+            val checkIns: List<CheckIn> = allMember.map { member ->
                 CheckIn(
                     id = null,
                     user = member,
