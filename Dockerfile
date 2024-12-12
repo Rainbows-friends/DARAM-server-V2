@@ -12,7 +12,7 @@ RUN ./gradlew clean build --no-daemon
 FROM openjdk:21-jdk-slim as stage-1
 RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
 WORKDIR /app
-COPY --from=base /app/build/libs/DARAM-server-V2-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=base /app/build/libs/DARAM-server-V2-0.0.1.jar /app/app.jar
 RUN rm -rf /app/.gradle /app/build/tmp /root/.gradle
 ENV TZ=${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
