@@ -25,7 +25,7 @@ class CheckInDataScheduler(
         checkInPreparation.prepareCheckInsForDate(tomorrow)
     }
 
-    @Scheduled(cron = "0 0 23 * * *")
+    @Scheduled(cron = "0 35 21 * * *")
     fun deleteOldCheckInData() {
         val cutoffDate = LocalDate.now().minusDays(2)
         checkInRepository.deleteAll(checkInRepository.findByCheckinDate(cutoffDate))
@@ -36,7 +36,7 @@ class CheckInDataScheduler(
     fun scheduledCheckInDataSync() {
         val today: LocalDate = LocalDate.now()
         val tomorrow: LocalDate = today.plusDays(1)
-        if (today.dayOfWeek == DayOfWeek.FRIDAY) {
+        if (today.dayOfWeek == DayOfWeek.THURSDAY || today.dayOfWeek == DayOfWeek.FRIDAY) {
             return
         }
         checkInPreparation.prepareCheckInsForDate(tomorrow)
