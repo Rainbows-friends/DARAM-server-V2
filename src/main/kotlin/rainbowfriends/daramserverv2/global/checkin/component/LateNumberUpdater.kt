@@ -20,7 +20,7 @@ class LateNumberUpdater(
                 if (!checkIn.checkinStatus) {
                     val member = memberRepository.findById(checkIn.id!!)
                         .orElseThrow { MemberNotFoundException("Member not found") }
-                    member.lateNumber += 1
+                    member.lateNumber = member.lateNumber?.plus(1)
                     memberRepository.save(member)
                 }
             }
