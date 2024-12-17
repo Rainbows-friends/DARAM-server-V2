@@ -1,14 +1,15 @@
 package rainbowfriends.daramserverv2.domain.checkin.component
 
 import org.springframework.stereotype.Component
-import rainbowfriends.daramserverv2.domain.checkin.service.CheckInTransactionService
+import rainbowfriends.daramserverv2.domain.checkin.service.CheckInTransaction
 import rainbowfriends.daramserverv2.global.checkin.component.CheckInDataSync
 import rainbowfriends.daramserverv2.global.redis.redisson.util.DistributedLock
+import rainbowfriends.daramserverv2.global.util.ParseStudentId.parseStudentId
 import java.time.LocalDate
 
 @Component
 class CheckInStatusSwitch(
-    private val checkInTransactionService: CheckInTransactionService,
+    private val checkInTransaction: CheckInTransaction,
     private val checkInDataSync: CheckInDataSync,
     private val distributedLock: DistributedLock
 ) {
@@ -23,12 +24,13 @@ class CheckInStatusSwitch(
 
     private fun handleCheckInStatusSwitch(studentId: Short, date: LocalDate): Boolean {
         return try {
-            val user = checkInTransactionService.getMemberInfo(studentId)
-            val checkIn = checkInTransactionService.getCheckInRecord(user, date)
-            checkInTransactionService.toggleCheckInStatus(checkIn)
+            val parsedStudentId = parseStudentId(studentId.toString())
+            val user = checkInTransaction.getMemberDto(parsedStudentId.first, parsedStudentId.second, parsedStudentId.third)
+            val checkIn = checkInTransaction.getCheckInRecord(user, date)
+            checkInTransaction.toggleCheckInStatus(checkIn)
             checkInDataSync.syncCheckInToMongoDB(checkIn)
             true
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             false
         }
     }
