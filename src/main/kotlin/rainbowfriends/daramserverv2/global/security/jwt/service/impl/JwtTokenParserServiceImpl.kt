@@ -5,6 +5,7 @@ import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import rainbowfriends.daramserverv2.global.member.enums.Roles
+import rainbowfriends.daramserverv2.global.security.exception.InvalidTokenFormatException
 import rainbowfriends.daramserverv2.global.security.jwt.service.JwtTokenParserService
 
 @Service
@@ -17,7 +18,12 @@ class JwtTokenParserServiceImpl(@Value("\${jwt.secret}") private val secretKey: 
 
     override fun extractRole(token: String): Roles {
         val claims = parseClaims(token)
-        return Roles.valueOf(claims["role"].toString())
+        val roleValue = claims["role"]?.toString()
+        return try {
+            Roles.valueOf(roleValue ?: throw IllegalArgumentException("Role is null"))
+        } catch (_: IllegalArgumentException) {
+            throw InvalidTokenFormatException("Invalid role in token: $roleValue")
+        }
     }
 
     override fun isTokenValid(token: String): Boolean {
