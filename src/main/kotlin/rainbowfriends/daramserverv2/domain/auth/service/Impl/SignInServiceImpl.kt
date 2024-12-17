@@ -12,14 +12,11 @@ import rainbowfriends.daramserverv2.domain.auth.dto.response.SigninOrReissueResp
 import rainbowfriends.daramserverv2.domain.auth.exception.EmailFormatException
 import rainbowfriends.daramserverv2.domain.auth.exception.InvalidCodeException
 import rainbowfriends.daramserverv2.domain.auth.service.SignInService
-import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.global.member.component.FindMember
 import rainbowfriends.daramserverv2.global.member.component.SaveMember
 import rainbowfriends.daramserverv2.global.member.entity.Member
 import rainbowfriends.daramserverv2.global.security.jwt.service.JwtTokenService
 import java.util.*
-
-// TODO: JWT 엔드포인트 적용 테스트 필요
 
 @Service
 class SignInServiceImpl(
@@ -101,8 +98,7 @@ class SignInServiceImpl(
         val classroom = (studentNumber - 1) / 18 + 1
         val number = (studentNumber - 1) % 18 + 1
         val member = findMember.findMemberByGradeAndClassNumAndNumber(grade, classroom, number)
-            ?: throw MemberNotFoundException("Member Not Found")
-        member.email = email
+        member!!.email = email
         return saveMember.saveMember(member)
     }
 }
