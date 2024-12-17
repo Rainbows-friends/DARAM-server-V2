@@ -12,7 +12,7 @@ noArg {
 }
 
 group = "Rainbow_Friends"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 
 java {
     toolchain {
@@ -42,7 +42,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.redisson:redisson-spring-boot-starter:3.22.1")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 
@@ -68,11 +67,12 @@ dependencies {
     implementation("com.google.oauth-client:google-oauth-client-jetty:1.34.1")
     implementation("com.google.http-client:google-http-client-gson:1.41.5")
 
-    // Swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
-
     // JAVAX
     implementation("javax.servlet:javax.servlet-api:4.0.1")
+
+    // Jakarta
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
 
     // Thymeleaf Extras
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")

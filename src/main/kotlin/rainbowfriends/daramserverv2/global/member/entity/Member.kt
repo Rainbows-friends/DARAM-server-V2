@@ -2,6 +2,7 @@ package rainbowfriends.daramserverv2.global.member.entity
 
 import jakarta.persistence.*
 import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdException
+import rainbowfriends.daramserverv2.global.member.dto.MemberDTO
 import rainbowfriends.daramserverv2.global.member.enums.Roles
 
 @Entity
@@ -34,7 +35,7 @@ data class Member(
     @Column(nullable = false)
     val stay: Boolean = true,
     @Column(name = "late", table = "member_late_table", nullable = false)
-    var lateNumber: Long = 0
+    var lateNumber: Long? = 0
 ) {
     fun generateStudentId(grade: Int, classNum: Int, number: Int): Short {
         if (grade < 1 || grade > 3) {
@@ -47,5 +48,21 @@ data class Member(
             throw InvalidStudentIdException("Invalid number: $number")
         }
         return String.format("%d%d%02d", grade, classNum, number).toShort()
+    }
+
+    fun toDto(): MemberDTO {
+        return MemberDTO(
+            id = id!!,
+            email = this.email,
+            name = this.name,
+            grade = this.grade,
+            classNum = this.classNum,
+            number = this.number,
+            floor = this.floor,
+            room = this.room,
+            role = this.role,
+            stay = this.stay,
+            lateNumber = this.lateNumber!!
+        )
     }
 }

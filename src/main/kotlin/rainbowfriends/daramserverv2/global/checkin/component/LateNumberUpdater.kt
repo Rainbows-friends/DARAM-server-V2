@@ -16,15 +16,15 @@ class LateNumberUpdater(
     @Transactional
     fun lateNumberRaise(date: LocalDate) {
         try {
-            checkInRepository.findByCheckinDate(date).forEach { checkIn ->
+            checkInRepository.findByCheckinInfoDate(date).forEach { checkIn ->
                 if (!checkIn.checkinStatus) {
                     val member = memberRepository.findById(checkIn.id!!)
                         .orElseThrow { MemberNotFoundException("Member not found") }
-                    member.lateNumber += 1
+                    member.lateNumber = member.lateNumber?.plus(1)
                     memberRepository.save(member)
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw LateNumberRaiseFailException("Late Number Raise failed")
         }
     }

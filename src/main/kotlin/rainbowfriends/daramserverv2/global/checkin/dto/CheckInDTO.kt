@@ -1,22 +1,12 @@
 package rainbowfriends.daramserverv2.global.checkin.dto
 
-import rainbowfriends.daramserverv2.global.checkin.entity.CheckInMongoDB
+import rainbowfriends.daramserverv2.global.member.entity.Member
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class CheckInDTO(
     val id: Long?,
-    val userName: String,
-    val studentId: Short,
-    val checkinStatus: Boolean,
-    val checkinDate: LocalDate
-) {
-    fun toMongoDBDocument(): CheckInMongoDB {
-        return CheckInMongoDB(
-            id = this.id.toString(),
-            userName = this.userName,
-            studentId = this.studentId,
-            checkinStatus = this.checkinStatus,
-            checkinDate = this.checkinDate
-        )
-    }
-}
+    val user: Member,
+    var checkinStatus: Boolean = false,
+    val checkinDate: LocalDateTime? = null
+)

@@ -13,7 +13,9 @@ class DomainAuthorizationConfig {
                 HttpMethod.GET,
                 "/notice/all",
                 "/notice/{id}",
-                "/actuator/health"
+                "/actuator/health",
+                "/checkin/checkin",
+                "/checkin/uncheckin",
             ).permitAll()
             .requestMatchers(
                 HttpMethod.POST,
@@ -32,7 +34,6 @@ class DomainAuthorizationConfig {
                 "/notice/**"
             ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")
             .requestMatchers(
-                "/swagger-ui/**",
                 "/actuator/**"
             ).hasRole("DEVELOPER")
             .requestMatchers(

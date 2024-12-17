@@ -42,6 +42,6 @@ enum class Roles : Authentication, GrantedAuthority {
     };
 
     override fun getAuthority(): String {
-        return name
+        return "ROLE_$name"
     }
 }
