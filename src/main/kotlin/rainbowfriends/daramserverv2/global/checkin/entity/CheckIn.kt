@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction
 import rainbowfriends.daramserverv2.global.checkin.dto.CheckInDTO
 import rainbowfriends.daramserverv2.global.member.entity.Member
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "checkin_table")
@@ -19,18 +20,15 @@ data class CheckIn(
     val user: Member,
     @Column(name = "checkin_status", nullable = false)
     var checkinStatus: Boolean = false,
-    @Column(name = "checkin_date", nullable = false)
-    val checkinDate: LocalDate = LocalDate.now()
+    @Column(name = "checkin_info_make_date", nullable = false)
+    val checkinInfoDate: LocalDate = LocalDate.now(),
+    @Column(name = "checkin_date")
+    var checkinDate: LocalDateTime? = null
 ) {
     fun toDTO(): CheckInDTO {
         return CheckInDTO(
             id = this.id,
-            userName = this.user.name,
-            studentId = this.user.generateStudentId(
-                grade = this.user.grade,
-                classNum = this.user.classNum,
-                number = this.user.number
-            ),
+            user = this.user,
             checkinStatus = this.checkinStatus,
             checkinDate = this.checkinDate
         )
