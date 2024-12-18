@@ -15,7 +15,9 @@ import rainbowfriends.daramserverv2.domain.auth.service.SignInService
 import rainbowfriends.daramserverv2.global.member.component.FindMember
 import rainbowfriends.daramserverv2.global.member.component.SaveMember
 import rainbowfriends.daramserverv2.global.member.entity.Member
+import rainbowfriends.daramserverv2.global.member.enums.Roles
 import rainbowfriends.daramserverv2.global.security.jwt.service.JwtTokenService
+import rainbowfriends.daramserverv2.global.util.ParseStudentId
 import java.util.*
 
 @Service
@@ -97,8 +99,22 @@ class SignInServiceImpl(
         }
         val classroom = (studentNumber - 1) / 18 + 1
         val number = (studentNumber - 1) % 18 + 1
-        val member = findMember.findMemberByGradeAndClassNumAndNumber(grade, classroom, number)
+        val funking = funk(grade, number, classroom)
+        var member: Member? = Member(id = null, email = email, role = Roles.USER, grade = funking.first, classNum = funking.second, number = funking.third, name = "null", floor = 2, lateNumber = 0, room = 301)
+        if (funking.first != 0) {
+            member = findMember.findMemberByGradeAndClassNumAndNumber(funking.first, funking.second, funking.third)
+        }else {
+            member = findMember.findMemberByGradeAndClassNumAndNumber(grade, classroom, number)
+        }
         member!!.email = email
         return saveMember.saveMember(member)
+    }
+    private fun funk(grade: Int, number: Int,classNum:Int): Triple<Int,Int,Int> {
+        val tempStudentId = String.format("%d%d%02d", grade, classNum, number).toInt()
+        var result: Triple<Int, Int, Int> = Triple(0, 0, 0)
+        if (tempStudentId >= 1109 && tempStudentId <= 1118) {
+            result = Triple(1, 1, ParseStudentId.parseStudentId(tempStudentId.toString()).third - 1)
+        }
+        return result
     }
 }
