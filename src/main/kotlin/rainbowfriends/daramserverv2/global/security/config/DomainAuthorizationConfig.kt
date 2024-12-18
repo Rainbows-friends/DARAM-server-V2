@@ -16,6 +16,7 @@ class DomainAuthorizationConfig {
                 "/actuator/health",
                 "/checkin/checkin",
                 "/checkin/uncheckin",
+                "/camera/authorization"
             ).permitAll()
             .requestMatchers(
                 HttpMethod.POST,

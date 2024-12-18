@@ -100,16 +100,28 @@ class SignInServiceImpl(
         val classroom = (studentNumber - 1) / 18 + 1
         val number = (studentNumber - 1) % 18 + 1
         val funking = funk(grade, number, classroom)
-        var member: Member? = Member(id = null, email = email, role = Roles.USER, grade = funking.first, classNum = funking.second, number = funking.third, name = "null", floor = 2, lateNumber = 0, room = 301)
-        if (funking.first != 0) {
+        var member: Member? = Member(
+            id = null,
+            email = email,
+            role = Roles.USER,
+            grade = funking.first,
+            classNum = funking.second,
+            number = funking.third,
+            name = "null",
+            floor = 2,
+            lateNumber = 0,
+            room = 301
+        )
+        if (funking.first != 0) {  // TODO 2025학년도가 되면 fuck 함수 제거
             member = findMember.findMemberByGradeAndClassNumAndNumber(funking.first, funking.second, funking.third)
-        }else {
+        } else {
             member = findMember.findMemberByGradeAndClassNumAndNumber(grade, classroom, number)
         }
         member!!.email = email
         return saveMember.saveMember(member)
     }
-    private fun funk(grade: Int, number: Int,classNum:Int): Triple<Int,Int,Int> {
+
+    private fun funk(grade: Int, number: Int, classNum: Int): Triple<Int, Int, Int> {
         val tempStudentId = String.format("%d%d%02d", grade, classNum, number).toInt()
         var result: Triple<Int, Int, Int> = Triple(0, 0, 0)
         if (tempStudentId >= 1109 && tempStudentId <= 1118) {
