@@ -233,4 +233,14 @@ class GlobalExceptionHandler {
         )
         return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
     }
+
+    @ExceptionHandler(KeyNotFoundException::class)
+    fun handleKeyNotFoundException(ex: KeyNotFoundException): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.UNAUTHORIZED.value(),
+            message = "Key is invalid",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+    }
 }
