@@ -32,7 +32,6 @@ dependencies {
     // Spring Boot Starters
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework:spring-context-support")
@@ -73,15 +72,6 @@ dependencies {
     // Jakarta
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
-
-    // Thymeleaf Extras
-    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
-
-    // Development Only
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-
-    // Performance Monitoring
-    implementation("io.micrometer:micrometer-registry-prometheus")
 
     // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")

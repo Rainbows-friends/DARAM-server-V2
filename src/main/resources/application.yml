@@ -6,27 +6,23 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:${DB_TYPE:mariadb}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:daram}?serverTimezone=KST
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:123456}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: none
+    show-sql: false
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
         jdbc:
           batch_size: 50
-        dialect: org.hibernate.dialect.MariaDBDialect
         order_updates: true
         default_batch_fetch_size: 100
-        use_sql_comments: true
-        hibernate.type:
-          print: true
-    generate-ddl: true
   data:
     redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -52,25 +48,23 @@ spring:
             client-name: google
 logging:
   level:
-    root: info
-    org.springframework.security: debug
-    org.springframework.web: info
+    root: error
+    org.springframework.security: warn
+    org.springframework.web: warn
   file:
-    path: ./logs/application.log
+    path: /var/logs/daram/application.log
 management:
   endpoint:
     health:
-      show-details: always
+      show-details: when_authorized
   endpoints:
-    jmx:
-      exposure:
-        include: prometheus
+    enabled-by-default: false
 token:
   secret: ${TOKEN_SECRET}
 jwt:
   secret: ${JWT_SECRET}
-  access-token-validity: 21600000
-  refresh-token-validity: 1209600000
+  access-token-validity: 3600000
+  refresh-token-validity: 604800000
 production:
   url: ${PROD_URL}
   front-url: ${FRONT_URL}
