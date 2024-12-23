@@ -18,18 +18,18 @@ class ReissueServiceImpl(
     private val findMember: FindMember
 ) : ReissueService {
     override fun reissue(refreshToken: String): SigninOrReissueResponse {
-        val userId: String = jwtTokenParserService.extractUserId(refreshToken)
         if (jwtTokenRefreshService.validateRefreshToken(refreshToken)) {
-                val newRefreshToken: Pair<Pair<String, Date>, Pair<String, Date>> =
-                    jwtTokenRefreshService.regenerateToken(userId, refreshToken)
-                return SigninOrReissueResponse(
-                    accessToken = newRefreshToken.first.first,
-                    refreshToken = newRefreshToken.second.first,
-                    accessTokenExpiresIn = newRefreshToken.first.second.toInstant().toString(),
-                    refreshTokenExpiresIn = newRefreshToken.second.second.toInstant().toString(),
-                    role = findMember.findMemberByEmail(userId)?.role
-                        ?: throw MemberNotFoundException("Member Not Found")
-                )
+            val userId: String = jwtTokenParserService.extractUserId(refreshToken)
+            val newRefreshToken: Pair<Pair<String, Date>, Pair<String, Date>> =
+                jwtTokenRefreshService.regenerateToken(userId, refreshToken)
+            return SigninOrReissueResponse(
+                accessToken = newRefreshToken.first.first,
+                refreshToken = newRefreshToken.second.first,
+                accessTokenExpiresIn = newRefreshToken.first.second.toInstant().toString(),
+                refreshTokenExpiresIn = newRefreshToken.second.second.toInstant().toString(),
+                role = findMember.findMemberByEmail(userId)?.role
+                    ?: throw MemberNotFoundException("Member Not Found")
+            )
         } else {
             throw ReissueTokenException("Invalid Refresh Token")
         }
