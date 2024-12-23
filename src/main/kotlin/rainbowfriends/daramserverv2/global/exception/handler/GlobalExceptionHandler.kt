@@ -20,18 +20,6 @@ import java.security.InvalidKeyException
 
 @ControllerAdvice
 class GlobalExceptionHandler {
-
-    @Deprecated(message = "Exception handling for TokenService is deprecated")
-    @ExceptionHandler(TokenFormatException::class)
-    fun handleTokenFormatException(ex: TokenFormatException): ResponseEntity<ErrorResponse> {
-        val errorResponse = ErrorResponse(
-            code = HttpStatus.UNAUTHORIZED.value(),
-            message = "Token format is invalid",
-            status = ErrorStatus.ERROR
-        )
-        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
-    }
-
     @ExceptionHandler(InvalidTokenFormatException::class)
     fun handleInvalidTokenFormatException(ex: InvalidTokenFormatException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
@@ -77,28 +65,6 @@ class GlobalExceptionHandler {
         val errorResponse = ErrorResponse(
             code = HttpStatus.UNAUTHORIZED.value(),
             message = "Refresh Token is invalid",
-            status = ErrorStatus.ERROR
-        )
-        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
-    }
-
-    @Deprecated(message = "Exception handling for TokenService is deprecated")
-    @ExceptionHandler(NoTokenException::class)
-    fun handleNoTokenException(ex: NoTokenException): ResponseEntity<ErrorResponse> {
-        val errorResponse = ErrorResponse(
-            code = HttpStatus.UNAUTHORIZED.value(),
-            message = "Token is not provided",
-            status = ErrorStatus.ERROR
-        )
-        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
-    }
-
-    @Deprecated(message = "Exception handling for TokenService is deprecated")
-    @ExceptionHandler(TokenNotFoundException::class)
-    fun handleTokenNotFoundException(ex: TokenNotFoundException): ResponseEntity<ErrorResponse> {
-        val errorResponse = ErrorResponse(
-            code = HttpStatus.UNAUTHORIZED.value(),
-            message = "Token is not found",
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
