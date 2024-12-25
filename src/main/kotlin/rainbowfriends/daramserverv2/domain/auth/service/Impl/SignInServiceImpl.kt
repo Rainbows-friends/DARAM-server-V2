@@ -42,9 +42,9 @@ class SignInServiceImpl(
         val refreshToken = jwtTokenService.generateRefreshToken(email, member.role)
         return SigninOrReissueResponse(
             accessToken = accessToken.first,
-            accessTokenExpiresIn = accessToken.second.toInstant().toString(),
+            accessTokenExpiresIn = accessToken.second.toString(),
             refreshToken = refreshToken.first,
-            refreshTokenExpiresIn = refreshToken.second.toInstant().toString(),
+            refreshTokenExpiresIn = refreshToken.second.toString(),
             role = member.role
         )
     }
