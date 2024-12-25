@@ -25,7 +25,7 @@ class JwtTokenServiceImpl(
         val expirationDate = Date.from(
             LocalDateTime.now()
                 .plusSeconds(accessTokenValidity)
-                .atZone(ZoneId.systemDefault())
+                .atZone(ZoneId.of("Asia/Seoul"))
                 .toInstant()
         )
         val token = Jwts.builder()
@@ -42,7 +42,7 @@ class JwtTokenServiceImpl(
         val expirationDate = Date.from(
             LocalDateTime.now()
                 .plusSeconds(refreshTokenValidity)
-                .atZone(ZoneId.systemDefault())
+                .atZone(ZoneId.of("Asia/Seoul"))
                 .toInstant()
         )
         val token = Jwts.builder()
