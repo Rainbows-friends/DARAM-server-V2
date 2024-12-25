@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service
 import rainbowfriends.daramserverv2.global.member.enums.Roles
 import rainbowfriends.daramserverv2.global.redis.RedisUtil
 import rainbowfriends.daramserverv2.global.security.jwt.service.JwtTokenService
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 @Service
@@ -20,7 +22,12 @@ class JwtTokenServiceImpl(
     private val key = Keys.hmacShaKeyFor(secretKey.toByteArray())
 
     override fun generateAccessToken(userId: String, role: Roles): Pair<String, Date> {
-        val expirationDate = Date(Date().time + accessTokenValidity)
+        val expirationDate = Date.from(
+            LocalDateTime.now()
+                .plusSeconds(accessTokenValidity)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+        )
         val token = Jwts.builder()
             .setSubject(userId)
             .claim("role", role.name)
@@ -32,7 +39,12 @@ class JwtTokenServiceImpl(
     }
 
     override fun generateRefreshToken(userId: String, role: Roles): Pair<String, Date> {
-        val expirationDate = Date(Date().time + refreshTokenValidity)
+        val expirationDate = Date.from(
+            LocalDateTime.now()
+                .plusSeconds(refreshTokenValidity)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+        )
         val token = Jwts.builder()
             .setSubject(userId)
             .claim("role", role.name)
