@@ -21,35 +21,25 @@ class JwtTokenServiceImpl(
 ) : JwtTokenService {
     private val key = Keys.hmacShaKeyFor(secretKey.toByteArray())
 
-    override fun generateAccessToken(userId: String, role: Roles): Pair<String, Date> {
-        val expirationDate = Date.from(
-            LocalDateTime.now()
-                .plusSeconds(accessTokenValidity)
-                .atZone(ZoneId.systemDefault())
-                .toInstant()
-        )
+    override fun generateAccessToken(userId: String, role: Roles): Pair<String, LocalDateTime> {
+        val expirationDate: LocalDateTime = LocalDateTime.now().plusSeconds(accessTokenValidity)
         val token = Jwts.builder()
             .setSubject(userId)
             .claim("role", role.name)
             .setIssuedAt(Date())
-            .setExpiration(expirationDate)
+            .setExpiration(Date.from(expirationDate.atZone(ZoneId.of("Asia/Seoul")).toInstant()))
             .signWith(key, SignatureAlgorithm.HS256)
             .compact()
         return Pair(token, expirationDate)
     }
 
-    override fun generateRefreshToken(userId: String, role: Roles): Pair<String, Date> {
-        val expirationDate = Date.from(
-            LocalDateTime.now()
-                .plusSeconds(refreshTokenValidity)
-                .atZone(ZoneId.systemDefault())
-                .toInstant()
-        )
+    override fun generateRefreshToken(userId: String, role: Roles): Pair<String, LocalDateTime> {
+        val expirationDate: LocalDateTime = LocalDateTime.now().plusSeconds(refreshTokenValidity)
         val token = Jwts.builder()
             .setSubject(userId)
             .claim("role", role.name)
             .setIssuedAt(Date())
-            .setExpiration(expirationDate)
+            .setExpiration(Date.from(expirationDate.atZone(ZoneId.of("Asia/Seoul")).toInstant()))
             .signWith(key, SignatureAlgorithm.HS256)
             .compact()
         redisUtil.set(token, userId, refreshTokenValidity.toInt())
