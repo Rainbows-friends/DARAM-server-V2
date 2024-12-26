@@ -11,8 +11,8 @@ import java.time.LocalDate
 
 @Repository
 interface CheckInRepository : JpaRepository<CheckIn, Long> {
-    @EntityGraph(attributePaths = ["user"])
-    override fun findAll(pageable: Pageable): Page<CheckIn>
+    @EntityGraph(attributePaths = ["user"])  // user 필드를 Eager로 로딩(지연 로딩 방지)
+    override fun findAll(pageable: Pageable): Page<CheckIn> // 페이징 처리를 위한 findAll 메서드
     fun findByUserAndCheckinInfoDate(user: Member, checkinDate: LocalDate): CheckIn
     fun findByCheckinInfoDateAndCheckinStatus(checkinDate: LocalDate, checkinStatus: Boolean): List<CheckIn>
     fun findByCheckinInfoDate(checkinDate: LocalDate): List<CheckIn>

@@ -19,38 +19,38 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(
         http: HttpSecurity, jwtTokenParserService: JwtTokenParserService
-    ): SecurityFilterChain {
-        http
-            .cors { cors -> cors.configurationSource(corsConfig.configureCors()) }
-            .csrf { csrf -> csrf.disable() }
-            .formLogin { form -> form.disable() }
-            .oauth2Login {
-                it.loginPage("/oauth2/authorization/google")
-                    .successHandler { request, response, authentication ->
-                        response.sendRedirect("/success")
+    ): SecurityFilterChain {  // SecurityFilterChain 빈 생성
+        http  // HttpSecurity 설정
+            .cors { cors -> cors.configurationSource(corsConfig.configureCors()) }  // CORS 설정(설정된 CorsConfig를 사용)
+            .csrf { csrf -> csrf.disable() }  // CSRF(사이트간 요청 위조) 설정 비활성화
+            .formLogin { form -> form.disable() }  // Form 로그인 설정 비활성화
+            .oauth2Login {  // OAuth2 로그인 설정
+                it.loginPage("/oauth2/authorization/google")  // OAuth2 로그인 페이지 설정(해당 URL로 접속 시 OAuth2 로그인 페이지로 리다이렉트)
+                    .successHandler { request, response, authentication ->  // 로그인 성공 시 핸들러
+                        response.sendRedirect("/success")  // 로그인 성공 시 /success로 리다이렉트
                     }
-                    .failureHandler { request, response, exception ->
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed")
+                    .failureHandler { request, response, exception ->  // 로그인 실패 시 핸들러
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed")  // 로그인 실패 시 401 에러 반환
                     }
             }
-            .sessionManagement { session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement { session ->  // 세션 관리 설정
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // 세션 생성 정책 설정(STATELESS: 세션 사용 안함)
             }
-            .addFilterBefore(
+            .addFilterBefore(  // JwtFilter를 UsernamePasswordAuthenticationFilter 앞에 추가
                 JwtFilter(jwtTokenParserService),
-                UsernamePasswordAuthenticationFilter::class.java
+                UsernamePasswordAuthenticationFilter::class.java  // UsernamePasswordAuthenticationFilter(기본 로그인 필터) 앞에 추가
             )
-            .authorizeHttpRequests {
+            .authorizeHttpRequests {  // 요청 권한 설정
                 domainAuthorizationConfig.configure(it)
             }
-            .exceptionHandling { exceptions ->
+            .exceptionHandling { exceptions ->  // 예외 처리 설정
                 exceptions.authenticationEntryPoint { request, response, authException ->
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")  // 인증되지 않은 사용자의 요청 시 401 에러 반환
                 }
-                exceptions.accessDeniedHandler { request, response, accessDeniedException ->
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied")
+                exceptions.accessDeniedHandler { request, response, accessDeniedException ->  // 접근 거부 시 핸들러
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied")  // 접근 걱부 시 403 에러 반환
                 }
             }
-        return http.build()
+        return http.build()  // HttpSecurity 설정 빌드하여 반환
     }
 }

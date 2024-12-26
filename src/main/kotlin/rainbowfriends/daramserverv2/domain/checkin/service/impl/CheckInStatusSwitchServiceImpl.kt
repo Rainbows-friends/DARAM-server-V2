@@ -10,11 +10,11 @@ import java.time.LocalDate
 @Service
 class CheckInStatusSwitchServiceImpl(private val checkInStatusSwitch: CheckInStatusSwitch): CheckInStatusSwitchService {
     override fun switchCheckInStatus(request: CheckInStatusSwitchRequest) {
-        if (!checkInStatusSwitch.switchCheckInStatus(
-            date = LocalDate.now(),
-            studentId = request.studentId
+        if (!checkInStatusSwitch.switchCheckInStatus(  // CheckInStatusSwitch의 switchCheckInStatus 메서드를 호출
+            date = LocalDate.now(),  // 현재 날짜
+            studentId = request.studentId  // Request의 studentId
         )){
-            throw CheckInStatusSwitchException("CheckIn Status Switch Failed")
+            throw CheckInStatusSwitchException("CheckIn Status Switch Failed")  // CheckIn Status Switch 실패 시 예외 발생
         }
     }
 }

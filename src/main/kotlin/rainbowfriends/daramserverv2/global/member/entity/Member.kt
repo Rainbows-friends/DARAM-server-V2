@@ -7,7 +7,7 @@ import rainbowfriends.daramserverv2.global.member.enums.Roles
 
 @Entity
 @Table(name = "members_table")
-@SecondaryTable(
+@SecondaryTable(  // 코드상으론 하나의 클래스이지만 DB상에서는 두 개의 테이블로 나뉘어 저장됨
     name = "member_late_table",
     pkJoinColumns = [PrimaryKeyJoinColumn(name = "member_id", referencedColumnName = "id")]
 )
@@ -29,15 +29,15 @@ data class Member(
     val floor: Int,
     @Column(nullable = false)
     val room: Int,
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)  // Enum 타입을 DB에 문자열로 저장
     @Column(nullable = false)
     val role: Roles,
     @Column(nullable = false)
     val stay: Boolean = true,
-    @Column(name = "late", table = "member_late_table", nullable = false)
+    @Column(name = "late", table = "member_late_table", nullable = false)  // member_late_table 테이블에 저장
     var lateNumber: Long? = 0
 ) {
-    fun generateStudentId(grade: Int, classNum: Int, number: Int): Short {
+    fun generateStudentId(grade: Int, classNum: Int, number: Int): Short {  // 학년, 반, 번호로 학번 생성
         if (grade < 1 || grade > 3) {
             throw InvalidStudentIdException("Invalid grade: $grade")
         }
@@ -50,7 +50,7 @@ data class Member(
         return String.format("%d%d%02d", grade, classNum, number).toShort()
     }
 
-    fun toDto(): MemberDTO {
+    fun toDto(): MemberDTO {  // Entity를 DTO로 변환하는 메서드
         return MemberDTO(
             id = id!!,
             email = this.email,

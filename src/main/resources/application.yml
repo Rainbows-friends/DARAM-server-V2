@@ -1,73 +1,73 @@
 spring:
   application:
-    name: DARAM-server-V2
+    name: DARAM-server-V2  # Application 이름
   jackson:
-    time-zone: Asia/Seoul
+    time-zone: Asia/Seoul  # 시간대
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:${DB_TYPE:mariadb}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:daram}?serverTimezone=KST
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver  # DB 드라이버
+    url: jdbc:${DB_TYPE:mariadb}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:daram}?serverTimezone=KST  # DB URL
+    username: ${DB_USERNAME}  # DB 사용자 이름
+    password: ${DB_PASSWORD}  # DB 비밀번호
   jpa:
     hibernate:
-      ddl-auto: none
-    show-sql: false
-    properties:
+      ddl-auto: none  # DDL 자동 생성 여부
+    show-sql: false  # SQL 출력 여부
+    properties:  # Hibernate 설정
       hibernate:
-        dialect: org.hibernate.dialect.MariaDBDialect
+        dialect: org.hibernate.dialect.MariaDBDialect  # DB 방언
         jdbc:
-          batch_size: 50
-        order_updates: true
-        default_batch_fetch_size: 100
+          batch_size: 50  # JDBC 배치 사이즈
+        order_updates: true  # 업데이트 순서
+        default_batch_fetch_size: 100  # 기본 배치 사이즈
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      host: ${REDIS_HOST}  # Redis 호스트
+      port: ${REDIS_PORT}  # Redis 포트
   mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+    pathmatch:  # URL 매칭 설정
+      matching-strategy: ant_path_matcher  # URL 매칭 전략
   servlet:
     multipart:
-      enabled: true
-      max-file-size: 10MB
-      max-request-size: 10MB
+      enabled: true  # 멀티파트 요청 활성화 여부
+      max-file-size: 10MB  # 최대 파일 크기
+      max-request-size: 10MB  # 최대 요청 크기
   cache:
-    type: caffeine
+    type: caffeine  # 캐시 타입
   security:
     oauth2:
-      client:
+      client:  # OAuth2 클라이언트 설정
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
-            redirect-uri: "${FRONT_URL}/login/oauth2/code/google"
-            scope:
+            client-id: ${GOOGLE_CLIENT_ID}  # Google 클라이언트 ID
+            client-secret: ${GOOGLE_CLIENT_SECRET}  # Google 클라이언트 비밀번호
+            redirect-uri: "${FRONT_URL}/login/oauth2/code/google"  # 리다이렉트 URI
+            scope:  # OAuth2 스코프(요청 범위)
               - email
               - profile
-            authorization-grant-type: authorization_code
-            client-name: google
+            authorization-grant-type: authorization_code  # 인증 타입
+            client-name: google  # 클라이언트 이름
 logging:
   level:
-    root: error
-    org.springframework.security: warn
-    org.springframework.web: warn
+    root: error  # 로그 레벨
+    org.springframework.security: warn  # Spring Security 로그 레벨
+    org.springframework.web: warn  # Spring Web 로그 레벨
   file:
-    path: /var/logs/daram/application.log
-management:
+    path: /var/logs/daram/application.log  # 로그 파일 경로
+management:  # Actuator 설정
   endpoint:
     health:
-      show-details: when_authorized
-  endpoints:
-    enabled-by-default: false
+      show-details: when_authorized  # 상세 정보 표시 여부
+  endpoints:  # Actuator 엔드포인트 설정
+    enabled-by-default: false  # 기본 활성화 여부
 token:
   secret: ${TOKEN_SECRET}
 jwt:
-  secret: ${JWT_SECRET}
-  access-token-validity: 3600
-  refresh-token-validity: 604800
-production:
-  url: ${PROD_URL}
-  front-url: ${FRONT_URL}
-server:
+  secret: ${JWT_SECRET}  # JWT 시크릿
+  access-token-validity: 3600  # 액세스 토큰 유효기간
+  refresh-token-validity: 604800  # 리프레시 토큰 유효기간
+production:  # 프로덕션 환경 설정
+  url: ${PROD_URL}  # 프로덕션 URL
+  front-url: ${FRONT_URL}  # 프론트 URL
+server:  # 서버 설정
   servlet:
-    context-path: /api/v2
+    context-path: /api/v2  # 서블릿 컨텍스트 경로(URI Prefix)

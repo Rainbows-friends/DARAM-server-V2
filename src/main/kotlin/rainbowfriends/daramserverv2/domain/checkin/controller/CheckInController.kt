@@ -15,19 +15,19 @@ class CheckInController(
     private val missedCheckInMemberService: MissedCheckInMemberService,
     private val checkInStatusSwitchService: CheckInStatusSwitchService
 ) {
-    @GetMapping("/checkin")
+    @GetMapping("/checkin")  // GET /checkin/checkin
     fun getCheckInMember(): List<GetCheckInResponse> {
         return checkedInMemberService.getCheckedInMember()
     }
 
-    @GetMapping("/uncheckin")
+    @GetMapping("/uncheckin")  // GET /checkin/uncheckin
     fun getUnCheckInMember(): List<GetCheckInResponse> {
         return missedCheckInMemberService.getMissedCheckInMember()
     }
 
-    @PatchMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun switchCheckInStatus(@RequestBody request: CheckInStatusSwitchRequest) {
+    @PatchMapping  // PATCH /checkin
+    @ResponseStatus(HttpStatus.NO_CONTENT)  // 204 No Content
+    fun switchCheckInStatus(@RequestBody request: CheckInStatusSwitchRequest) {  // Request의 Body로 CheckInStatusSwitchRequest를 받음
         checkInStatusSwitchService.switchCheckInStatus(request)
     }
 }

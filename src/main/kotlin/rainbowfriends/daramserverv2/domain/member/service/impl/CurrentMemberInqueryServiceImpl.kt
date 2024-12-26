@@ -15,14 +15,14 @@ class CurrentMemberInqueryServiceImpl(
     private val findMember: FindMember
 ) : CurrentMemberInqueryService {
     override fun getCurrentMember(request: HttpServletRequest): MemberDTO {
-        if (request.getHeader("Authorization") == null) {
+        if (request.getHeader("Authorization") == null) {  // Authorization 헤더가 없을 경우 예외 발생
             throw TokenNotFoundException("Token not found")
-        } else
-            return findMember.findMemberByEmail(
-                jwtTokenParserService.extractUserId(
-                    request.getHeader("Authorization").substring(7)
+        } else  // Authorization 헤더가 있을 경우
+            return findMember.findMemberByEmail(  // Email로 Member 조회
+                jwtTokenParserService.extractUserId(  // JWT 토큰에서 UserId 추출
+                    request.getHeader("Authorization").substring(7)  // Authorization 헤더에서 Bearer 제외
                 )
             )
-                ?.toDto() ?: throw MemberNotFoundException("Member not found")
+                ?.toDto() ?: throw MemberNotFoundException("Member not found")  // Member가 없을 경우 예외 발생
     }
 }

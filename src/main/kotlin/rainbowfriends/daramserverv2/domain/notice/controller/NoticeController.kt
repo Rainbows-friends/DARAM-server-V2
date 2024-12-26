@@ -18,29 +18,29 @@ class NoticeController(
     private val deleteNoticeService: DeleteNoticeService
 ) {
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // GET /notice/{id}
     fun getNotice(@PathVariable id: Long): NoticeResponse {
         return getNoticeService.getNotice(id)
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all")  // GET /notice/all
     fun getAllNotices(): List<NoticeResponse> {
         return getAllNoticeService.getAllNotices()
     }
 
-    @PostMapping
-    fun postNotice(request: HttpServletRequest, @RequestBody requestDto: PostNoticeRequest): NoticeResponse {
+    @PostMapping   // POST /notice
+    fun postNotice(request: HttpServletRequest, @RequestBody requestDto: PostNoticeRequest): NoticeResponse {  // HttpServletRequest 객체와 PostNoticeRequest 객체를 인자로 받아 NoticeResponse 객체 반환
         return postNoticeService.postNotice(request, requestDto)
     }
 
-    @PatchMapping("/{id}")
-    fun patchNotice(@PathVariable id: Long, @RequestBody request: PatchNoticeRequest): NoticeResponse {
+    @PatchMapping("/{id}")  // PATCH /notice/{id}
+    fun patchNotice(@PathVariable id: Long, @RequestBody request: PatchNoticeRequest): NoticeResponse {  // PathVariable로 id를 받고, RequestBody로 PatchNoticeRequest 객체를 받아 NoticeResponse 객체 반환
         return patchNoticeService.patchNotice(id, request)
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteNotice(@PathVariable id: Long) {
+    @DeleteMapping("/{id}")  // DELETE /notice/{id}
+    @ResponseStatus(HttpStatus.NO_CONTENT)  // 204 No Content
+    fun deleteNotice(@PathVariable id: Long) {  // PathVariable로 id를 받아 공지사항 삭제
         deleteNoticeService.deleteNotice(id)
     }
 }

@@ -14,8 +14,8 @@ import java.util.*
         "rainbowfriends.daramserverv2.global.member.entity",
         "rainbowfriends.daramserverv2.global.checkin.entity"
     ]
-)
-@EnableScheduling
+)  // Entity 클래스가 있는 패키지를 지정
+@EnableScheduling  // 스케줄링 활성화
 class DaramServerV2Application
 
 fun main(args: Array<String>) {

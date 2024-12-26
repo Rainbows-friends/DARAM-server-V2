@@ -20,8 +20,8 @@ class RedissonConfig {
     @Bean
     fun redissonClient(): RedissonClient {
         val config = Config()
-        config.useSingleServer()
-            .setAddress("redis://$redisHost:$redisPort")
-        return Redisson.create(config)
+        config.useSingleServer()  // 단일 서버 사용
+            .setAddress("redis://$redisHost:$redisPort")  // Redis 주소 설정
+        return Redisson.create(config)  // Redisson 클라이언트 생성
     }
 }
