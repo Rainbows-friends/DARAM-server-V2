@@ -5,20 +5,18 @@ import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 
 @Component
-class DistributedLock(
-    private val redissonClient: RedissonClient
-) {
+class DistributedLock(private val redissonClient: RedissonClient) {
 
-    fun <T> executeWithLock(lockKey: String, waitTime: Long, leaseTime: Long, action: () -> T): T {
-        val lock = redissonClient.getLock(lockKey)
-        return if (lock.tryLock(waitTime, leaseTime, TimeUnit.SECONDS)) {
+    fun <T> executeWithLock(lockKey: String, waitTime: Long, leaseTime: Long, action: () -> T): T {  // Lock을 사용하여 작업 실행
+        val lock = redissonClient.getLock(lockKey)  // Lock 객체 생성
+        return if (lock.tryLock(waitTime, leaseTime, TimeUnit.SECONDS)) {  // Lock을 획득하면
             try {
-                action()
+                action()  // 작업 실행
             } finally {
-                lock.unlock()
+                lock.unlock()  // Lock 해제
             }
         } else {
-            throw IllegalStateException("Unable to acquire lock on key: $lockKey")
+            throw IllegalStateException("Unable to acquire lock on key: $lockKey")  // Lock 획득 실패 시 예외 발생
         }
     }
 }

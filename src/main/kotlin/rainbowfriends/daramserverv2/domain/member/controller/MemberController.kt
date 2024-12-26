@@ -14,16 +14,16 @@ class MemberController(
     private val allMemberInqueryService: MemberInqueryService,
     private val currentMemberInqueryService: CurrentMemberInqueryService
 ) {
-    @GetMapping
+    @GetMapping  // GET /member
     fun getAllMember(
-        @RequestParam(required = false) id: Long?,
-        @RequestParam(required = false) stay: Boolean?,
-        @RequestParam(required = false) floor: Int?,
-        @RequestParam(required = false) room: Int?,
-        @RequestParam(required = false) grade: Int?,
-        @RequestParam(required = false) classNum: Int?
+        @RequestParam(required = false) id: Long?,  // ?id={Int}
+        @RequestParam(required = false) stay: Boolean?,  // ?stay={Boolean}
+        @RequestParam(required = false) floor: Int?,  // ?floor={Int}
+        @RequestParam(required = false) room: Int?,  // ?room={Int}
+        @RequestParam(required = false) grade: Int?,  // ?grade={Int}
+        @RequestParam(required = false) classNum: Int?  // ?classNum={Int}
     ) = allMemberInqueryService.getAllMember(id, stay, floor, room, grade, classNum)
 
-    @GetMapping("/current")
-    fun getCurrentMember(request: HttpServletRequest) = currentMemberInqueryService.getCurrentMember(request)
+    @GetMapping("/current")  // GET /member/current
+    fun getCurrentMember(request: HttpServletRequest) = currentMemberInqueryService.getCurrentMember(request)  // HttpServletRequest를 통해 현재 Member 조회
 }

@@ -3,7 +3,7 @@ package rainbowfriends.daramserverv2.global.member.dto
 import rainbowfriends.daramserverv2.global.member.entity.Member
 import rainbowfriends.daramserverv2.global.member.enums.Roles
 
-data class MemberDTO(
+data class MemberDTO(  // Member Entity의 복제본인 DTO
     val id: Long? = 0,
     var email: String? = null,
     val name: String,
@@ -16,7 +16,7 @@ data class MemberDTO(
     val stay: Boolean = true,
     val lateNumber: Long = 0
 ) {
-    fun toEntity(): Member {
+    fun toEntity(): Member {  // DTO를 Entity로 변환하는 메서드
         return Member(
             id = id,
             email = email,

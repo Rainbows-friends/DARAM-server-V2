@@ -25,7 +25,7 @@ data class CheckIn(
     @Column(name = "checkin_date")
     var checkinDate: LocalDateTime? = null
 ) {
-    fun toDTO(): CheckInDTO {
+    fun toDTO(): CheckInDTO {  // Entity를 DTO로 변환하는 메서드
         return CheckInDTO(
             id = this.id,
             user = this.user,

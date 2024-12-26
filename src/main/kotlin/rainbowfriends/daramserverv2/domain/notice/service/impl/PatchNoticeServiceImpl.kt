@@ -11,12 +11,12 @@ import rainbowfriends.daramserverv2.global.member.enums.Roles
 @Service
 class PatchNoticeServiceImpl(private val modifyNotice: ModifyNotice) : PatchNoticeService {
     override fun patchNotice(id: Long, request: PatchNoticeRequest): NoticeResponse {
-        if (request.author == Roles.USER) {
+        if (request.author == Roles.USER) {  // author가 USER일 경우
             throw PatchNoticeRequestException("User cannot modify notice")
         }
-        if (request.title == null && request.content == null && request.author == null) {
+        if (request.title == null && request.content == null && request.author == null) {  // title, content, author 모두 null일 경우
             throw PatchNoticeRequestException("At least one field should be modified")
         }
-        return modifyNotice.modifyNotice(id, request)
+        return modifyNotice.modifyNotice(id, request)  // ModifyNotice 컴포넌트의 modifyNotice 메서드 호출
     }
 }

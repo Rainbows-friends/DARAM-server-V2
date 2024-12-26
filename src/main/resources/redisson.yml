@@ -1,10 +1,10 @@
-singleServerConfig:
-  connectionMinimumIdleSize: 10
-  connectionPoolSize: 50
-  idleConnectionTimeout: 10000
-  connectTimeout: 10000
-  timeout: 3000
-  retryAttempts: 3
-  retryInterval: 1500
-threads: 4
-nettyThreads: 4
+singleServerConfig:  # RedissonClient 설정
+  connectionMinimumIdleSize: 10  # 최소 연결 수
+  connectionPoolSize: 50  # 최대 연결 수
+  idleConnectionTimeout: 10000  # 연결 풀에서 연결이 해제되기 전에 대기하는 시간
+  connectTimeout: 10000  # 연결 시도 시간
+  timeout: 3000  # 명령 실행 시간
+  retryAttempts: 3  # 재시도 횟수
+  retryInterval: 1500  # 재시도 간격
+threads: 4  # Netty Threads 설정
+nettyThreads: 4  # Netty Threads 설정

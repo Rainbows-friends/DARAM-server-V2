@@ -2,7 +2,7 @@ package rainbowfriends.daramserverv2.domain.member.dto.response
 
 import rainbowfriends.daramserverv2.global.member.enums.Roles
 
-data class GetMemberResponse(
+data class GetMemberResponse(  // Member 조회 응답 DTO
     val id: Long?,
     val name: String?,
     val grade: Int?,

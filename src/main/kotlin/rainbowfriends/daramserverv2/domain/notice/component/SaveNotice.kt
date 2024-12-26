@@ -19,13 +19,13 @@ class SaveNotice(private val noticeRepository: NoticeRepository) {
             author = role,
             createdAt = LocalDateTime.now()
         )
-        noticeRepository.findByTitle(request.title)?.let {
-            if (it.author == role && it.context == request.content) {
-                throw DuplicateNoticeException("notice already exists")
+        noticeRepository.findByTitle(request.title)?.let {  // 해당 title의 공지사항이 존재할 경우
+            if (it.author == role && it.context == request.content) {  // author와 context가 모두 같을 경우
+                throw DuplicateNoticeException("notice already exists")  // 예외 처리
             }
         }
-        return noticeRepository.save(notice).let {
-            NoticeResponse(
+        return noticeRepository.save(notice).let {  // NoticeResponse 객체 반환
+            NoticeResponse(  // NoticeResponse 객체 반환
                 id = it.id,
                 title = it.title,
                 context = it.context,

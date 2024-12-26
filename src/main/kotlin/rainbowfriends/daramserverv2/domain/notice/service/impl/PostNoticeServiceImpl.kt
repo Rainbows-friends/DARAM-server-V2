@@ -15,7 +15,7 @@ class PostNoticeServiceImpl(
 ) :
     PostNoticeService {
     override fun postNotice(request: HttpServletRequest, requestDto: PostNoticeRequest): NoticeResponse {
-        val role = jwtTokenParserServiceImpl.extractRole(request.getHeader("Authorization").substringAfter("Bearer "))
-        return saveNotice.saveNotice(requestDto, role)
+        val role = jwtTokenParserServiceImpl.extractRole(request.getHeader("Authorization").substringAfter("Bearer "))  // Authorization 헤더에서 토큰을 추출하고 Bearer를 제거한 뒤 role 추출
+        return saveNotice.saveNotice(requestDto, role)  // SaveNotice 컴포넌트의 saveNotice 메서드 호출
     }
 }

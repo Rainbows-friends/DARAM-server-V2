@@ -16,19 +16,19 @@ class RedisConfig(
 ) {
 
     @Bean
-    fun redisConnectionFactory(): RedisConnectionFactory {
+    fun redisConnectionFactory(): RedisConnectionFactory {  // RedisConnectionFactory 빈 등록
         return LettuceConnectionFactory(redisHost, redisPort)
     }
 
     @Bean
-    fun redisTemplate(): RedisTemplate<String, Any> {
-        val redisTemplate = RedisTemplate<String, Any>()
-        redisTemplate.connectionFactory = redisConnectionFactory()
-        val serializer = GenericJackson2JsonRedisSerializer()
-        redisTemplate.keySerializer = StringRedisSerializer()
-        redisTemplate.valueSerializer = serializer
-        redisTemplate.hashKeySerializer = StringRedisSerializer()
-        redisTemplate.hashValueSerializer = serializer
+    fun redisTemplate(): RedisTemplate<String, Any> {  // RedisTemplate 빈 등록
+        val redisTemplate = RedisTemplate<String, Any>()  // RedisTemplate 객체 생성
+        redisTemplate.connectionFactory = redisConnectionFactory()  // RedisConnectionFactory(연결) 설정
+        val serializer = GenericJackson2JsonRedisSerializer()  // GenericJackson2JsonRedisSerializer 객체(직렬화) 생성
+        redisTemplate.keySerializer = StringRedisSerializer()  // keySerializer(키 직렬화) 설정
+        redisTemplate.valueSerializer = serializer  // valueSerializer(값 직렬화) 설정
+        redisTemplate.hashKeySerializer = StringRedisSerializer()  // hashKeySerializer(해시키 직렬화) 설정
+        redisTemplate.hashValueSerializer = serializer  // hashValueSerializer(해시값 직렬화) 설정
         return redisTemplate
     }
 }

@@ -16,18 +16,18 @@ class AuthController(
     private val cameraAuthorizationService: CameraAuthorizationService,
     private val reissueService: ReissueService
 ) {
-    @PostMapping("/signin")
+    @PostMapping("/signin")  // POST /auth/signin
     fun signIn(@RequestBody code: SignInRequest): SigninOrReissueResponse {
-        return signInService.signIn(code.code)
+        return signInService.signIn(code.code) // 로그인을 시도하는 코드를 받아 로그인을 시도하고 결과를 반환
     }
 
     @PostMapping("/camera/authorization")
     fun cameraAuthorization(@RequestBody key: CameraAuthorizationRequest): SigninOrReissueResponse {
-        return cameraAuthorizationService.cameraAuthorization(key.key)
+        return cameraAuthorizationService.cameraAuthorization(key.key)  // 카메라 인증을 시도하는 키를 받아 인증을 시도하고 결과를 반환
     }
 
     @PutMapping("/refresh")
     fun reissue(@RequestBody refreshToken: ReissueRequest): SigninOrReissueResponse {
-        return reissueService.reissue(refreshToken.refreshToken)
+        return reissueService.reissue(refreshToken.refreshToken)  // 리프레시 토큰을 받아 새로운 토큰을 발급하고 결과를 반환
     }
 }

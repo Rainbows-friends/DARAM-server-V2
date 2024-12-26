@@ -7,5 +7,5 @@ import rainbowfriends.daramserverv2.domain.notice.service.GetNoticeService
 
 @Service
 class GetNoticeServiceImpl(private val findNotice: FindNotice) : GetNoticeService {
-    override fun getNotice(id: Long): NoticeResponse = findNotice.findNotice(id)
+    override fun getNotice(id: Long): NoticeResponse = findNotice.findNotice(id)  // FindNotice 컴포넌트의 findNotice 메서드 호출
 }
