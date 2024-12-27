@@ -16,11 +16,11 @@ class DomainAuthorizationConfig {
                 "/actuator/health",
                 "/checkin/checkin",
                 "/checkin/uncheckin",
-                "/camera/authorization"
             ).permitAll()  // 모든 사용자에게 허용
             .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
                 HttpMethod.POST,  // POST 메서드
-                "/notice/**"
+                "/notice/**",
+                "/camera/authorization"
             ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
             .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
                 HttpMethod.PUT,  // PUT 메서드
