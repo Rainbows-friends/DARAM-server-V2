@@ -8,13 +8,15 @@ import rainbowfriends.daramserverv2.domain.auth.dto.response.SigninOrReissueResp
 import rainbowfriends.daramserverv2.domain.auth.service.CameraAuthorizationService
 import rainbowfriends.daramserverv2.domain.auth.service.ReissueService
 import rainbowfriends.daramserverv2.domain.auth.service.SignInService
+import rainbowfriends.daramserverv2.domain.auth.service.ValidateTokenService
 
 @RequestMapping("/auth")
 @RestController
 class AuthController(
     private val signInService: SignInService,
     private val cameraAuthorizationService: CameraAuthorizationService,
-    private val reissueService: ReissueService
+    private val reissueService: ReissueService,
+    private val validateTokenService: ValidateTokenService
 ) {
     @PostMapping("/signin")  // POST /auth/signin
     fun signIn(@RequestBody code: SignInRequest): SigninOrReissueResponse {
@@ -29,5 +31,10 @@ class AuthController(
     @PutMapping("/refresh")
     fun reissue(@RequestBody refreshToken: ReissueRequest): SigninOrReissueResponse {
         return reissueService.reissue(refreshToken.refreshToken)  // 리프레시 토큰을 받아 새로운 토큰을 발급하고 결과를 반환
+    }
+
+    @GetMapping("/token/validate")
+    fun validateToken(@RequestHeader("Authorization") authorization: String): Boolean {
+        return validateTokenService.validateToken(authorization.removePrefix("Bearer ").trim())  // 토큰을 받아 토큰이 유효한지 확인하고 결과를 반환
     }
 }
