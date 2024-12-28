@@ -28,7 +28,8 @@ class DomainAuthorizationConfig {
             ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
             .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
                 HttpMethod.PATCH,  // PATCH 메서드
-                "/notice/**"
+                "/notice/**",
+                "/member/room"
             ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
             .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
                 HttpMethod.DELETE,  // DELETE 메서드
