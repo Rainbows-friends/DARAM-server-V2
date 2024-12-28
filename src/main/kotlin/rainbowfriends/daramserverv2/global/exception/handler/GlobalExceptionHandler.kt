@@ -10,6 +10,7 @@ import rainbowfriends.daramserverv2.domain.auth.exception.KeyNotFoundException
 import rainbowfriends.daramserverv2.domain.auth.exception.ReissueTokenException
 import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdException
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
+import rainbowfriends.daramserverv2.domain.member.exception.PatchRoomException
 import rainbowfriends.daramserverv2.domain.member.exception.TokenNotFoundException
 import rainbowfriends.daramserverv2.domain.notice.exception.DuplicateNoticeException
 import rainbowfriends.daramserverv2.domain.notice.exception.NoticeNotFoundException
@@ -222,5 +223,15 @@ class GlobalExceptionHandler {  // 전역 예외 처리 클래스
             status = ErrorStatus.ERROR
         )
         return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(PatchRoomException::class)  // PatchRoomException 예외 처리
+    fun handlePatchRoomException(): ResponseEntity<ErrorResponse> {
+        val errorResponse = ErrorResponse(
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),  // HTTP 상태 코드 500
+            message = "Patch Room failed",
+            status = ErrorStatus.ERROR
+        )
+        return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 }
