@@ -4,12 +4,12 @@ import org.springframework.stereotype.Service
 import rainbowfriends.daramserverv2.domain.member.component.FindAllMember
 import rainbowfriends.daramserverv2.domain.member.dto.response.GetMemberResponse
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
-import rainbowfriends.daramserverv2.domain.member.service.MemberInqueryService
+import rainbowfriends.daramserverv2.domain.member.service.MemberInquiryService
 
 @Service
 class MemberInquiryServiceImpl(
     private val findAllMember: FindAllMember
-) : MemberInqueryService {
+) : MemberInquiryService {
 
     override fun getAllMember(
         id: Long?,

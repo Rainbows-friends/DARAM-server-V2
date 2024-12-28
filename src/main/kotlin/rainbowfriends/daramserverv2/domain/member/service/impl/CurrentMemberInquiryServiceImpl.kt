@@ -4,16 +4,16 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Service
 import rainbowfriends.daramserverv2.domain.member.exception.MemberNotFoundException
 import rainbowfriends.daramserverv2.domain.member.exception.TokenNotFoundException
-import rainbowfriends.daramserverv2.domain.member.service.CurrentMemberInqueryService
+import rainbowfriends.daramserverv2.domain.member.service.CurrentMemberInquiryService
 import rainbowfriends.daramserverv2.global.member.component.FindMember
 import rainbowfriends.daramserverv2.global.member.dto.MemberDTO
 import rainbowfriends.daramserverv2.global.security.jwt.service.JwtTokenParserService
 
 @Service
-class CurrentMemberInqueryServiceImpl(
+class CurrentMemberInquiryServiceImpl(
     private val jwtTokenParserService: JwtTokenParserService,
     private val findMember: FindMember
-) : CurrentMemberInqueryService {
+) : CurrentMemberInquiryService {
     override fun getCurrentMember(request: HttpServletRequest): MemberDTO {
         if (request.getHeader("Authorization") == null) {  // Authorization 헤더가 없을 경우 예외 발생
             throw TokenNotFoundException("Token not found")
