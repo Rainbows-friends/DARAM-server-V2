@@ -1,6 +1,7 @@
 package rainbowfriends.daramserverv2.global.member.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.BatchSize
 import rainbowfriends.daramserverv2.domain.member.exception.InvalidStudentIdException
 import rainbowfriends.daramserverv2.global.member.dto.MemberDTO
 import rainbowfriends.daramserverv2.global.member.enums.Roles
@@ -11,6 +12,7 @@ import rainbowfriends.daramserverv2.global.member.enums.Roles
     name = "member_late_table",
     pkJoinColumns = [PrimaryKeyJoinColumn(name = "member_id", referencedColumnName = "id")]
 )
+@BatchSize(size = 50)  // 한 번에 가져올 데이터의 양을 설정
 data class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
