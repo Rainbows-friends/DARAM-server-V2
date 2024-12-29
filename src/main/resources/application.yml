@@ -16,7 +16,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect  # DB 방언
         jdbc:
-          batch_size: 50  # JDBC 배치 사이즈
+          batch_size: 100  # JDBC 배치 사이즈
+        order_inserts: true  # 삽입 순서
         order_updates: true  # 업데이트 순서
         default_batch_fetch_size: 100  # 기본 배치 사이즈
   data:
@@ -59,14 +60,11 @@ management:  # Actuator 설정
       show-details: when_authorized  # 상세 정보 표시 여부
   endpoints:  # Actuator 엔드포인트 설정
     enabled-by-default: false  # 기본 활성화 여부
-token:
-  secret: ${TOKEN_SECRET}
 jwt:
   secret: ${JWT_SECRET}  # JWT 시크릿
   access-token-validity: 3600  # 액세스 토큰 유효기간
   refresh-token-validity: 604800  # 리프레시 토큰 유효기간
 production:  # 프로덕션 환경 설정
-  url: ${PROD_URL}  # 프로덕션 URL
   front-url: ${FRONT_URL}  # 프론트 URL
 server:  # 서버 설정
   servlet:
