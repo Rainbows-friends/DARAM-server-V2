@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration
 class CacheConfig {
     @Bean
     fun cacheManager(): CaffeineCacheManager {
-        val cacheManager = CaffeineCacheManager("allMembers", "MemberByStudentId", "MemberByEmail")  // 캐시 매니저 생성(캐시 이름은 allMembers, MemberByStudentId, MemberByEmail)
+        val cacheManager = CaffeineCacheManager("allMembers", "MemberByStudentId")  // 캐시 매니저 생성(캐시 이름은 allMembers, MemberByStudentId)
         cacheManager.setCaffeine(  // Java Caffeine 라이브러리를 사용하여 캐시 설정
             newBuilder()  // 캐시 빌더 생성
                 .maximumSize(1000)  // 캐시 최대 크기 설정

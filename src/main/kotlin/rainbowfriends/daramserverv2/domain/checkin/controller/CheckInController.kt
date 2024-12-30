@@ -1,6 +1,7 @@
 package rainbowfriends.daramserverv2.domain.checkin.controller
 
 import org.springframework.http.HttpStatus
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import rainbowfriends.daramserverv2.domain.checkin.dto.request.CheckInStatusSwitchRequest
 import rainbowfriends.daramserverv2.domain.checkin.dto.response.GetCheckInResponse
@@ -27,7 +28,7 @@ class CheckInController(
 
     @PatchMapping  // PATCH /checkin
     @ResponseStatus(HttpStatus.NO_CONTENT)  // 204 No Content
-    fun switchCheckInStatus(@RequestBody request: CheckInStatusSwitchRequest) {  // Request의 Body로 CheckInStatusSwitchRequest를 받음
+    fun switchCheckInStatus(@RequestBody @Validated request: CheckInStatusSwitchRequest) {  // Request의 Body로 CheckInStatusSwitchRequest를 받음
         checkInStatusSwitchService.switchCheckInStatus(request)
     }
 }

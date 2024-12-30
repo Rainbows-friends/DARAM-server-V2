@@ -62,8 +62,8 @@ management:  # Actuator 설정
     enabled-by-default: false  # 기본 활성화 여부
 jwt:
   secret: ${JWT_SECRET}  # JWT 시크릿
-  access-token-validity: 3600  # 액세스 토큰 유효기간
-  refresh-token-validity: 604800  # 리프레시 토큰 유효기간
+  access-token-validity: 2001390 # 액세스 토큰 유효기간(23시간)
+  refresh-token-validity: 604800  # 리프레시 토큰 유효기간(1주)
 production:  # 프로덕션 환경 설정
   front-url: ${FRONT_URL}  # 프론트 URL
 server:  # 서버 설정
