@@ -1,5 +1,6 @@
 package rainbowfriends.daramserverv2.domain.auth.controller
 
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import rainbowfriends.daramserverv2.domain.auth.dto.request.CameraAuthorizationRequest
 import rainbowfriends.daramserverv2.domain.auth.dto.request.ReissueRequest
@@ -19,21 +20,21 @@ class AuthController(
     private val validateTokenService: ValidateTokenService
 ) {
     @PostMapping("/signin")  // POST /auth/signin
-    fun signIn(@RequestBody code: SignInRequest): SigninOrReissueResponse {
+    fun signIn(@RequestBody @Validated code: SignInRequest): SigninOrReissueResponse {
         return signInService.signIn(code.code) // 로그인을 시도하는 코드를 받아 로그인을 시도하고 결과를 반환
     }
 
-    @PostMapping("/camera/authorization")
-    fun cameraAuthorization(@RequestBody key: CameraAuthorizationRequest): SigninOrReissueResponse {
+    @PostMapping("/camera/authorization")  // POST /auth/camera/authorization
+    fun cameraAuthorization(@RequestBody @Validated key: CameraAuthorizationRequest): SigninOrReissueResponse {
         return cameraAuthorizationService.cameraAuthorization(key.key)  // 카메라 인증을 시도하는 키를 받아 인증을 시도하고 결과를 반환
     }
 
-    @PutMapping("/refresh")
-    fun reissue(@RequestBody refreshToken: ReissueRequest): SigninOrReissueResponse {
+    @PutMapping("/refresh")  // PUT /auth/refresh
+    fun reissue(@RequestBody @Validated refreshToken: ReissueRequest): SigninOrReissueResponse {
         return reissueService.reissue(refreshToken.refreshToken)  // 리프레시 토큰을 받아 새로운 토큰을 발급하고 결과를 반환
     }
 
-    @GetMapping("/token/validate")
+    @GetMapping("/token/validate")  // GET /auth/token/validate
     fun validateToken(@RequestHeader("Authorization") authorization: String): Boolean {
         return validateTokenService.validateToken(authorization.removePrefix("Bearer ").trim())  // 토큰을 받아 토큰이 유효한지 확인하고 결과를 반환
     }
