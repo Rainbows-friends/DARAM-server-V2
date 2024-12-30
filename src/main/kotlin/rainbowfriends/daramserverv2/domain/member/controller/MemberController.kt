@@ -2,6 +2,7 @@ package rainbowfriends.daramserverv2.domain.member.controller
 
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import rainbowfriends.daramserverv2.domain.member.dto.request.PatchRoomRequest
 import rainbowfriends.daramserverv2.domain.member.service.CurrentMemberInquiryService
@@ -30,7 +31,7 @@ class MemberController(
 
     @PatchMapping("/room")  // PATCH /member/room
     @ResponseStatus(HttpStatus.NO_CONTENT)  // 204 No Content
-    fun patchRoom(@RequestBody patchRoomRequest: PatchRoomRequest) {  // Request Body로 PatchRoomRequest를 받아서
+    fun patchRoom(@RequestBody @Validated patchRoomRequest: PatchRoomRequest) {  // Request Body로 PatchRoomRequest를 받아서
         patchRoomService.patchRoom(patchRoomRequest)  // patchRoomService를 통해 Room 정보 수정
     }
 }
