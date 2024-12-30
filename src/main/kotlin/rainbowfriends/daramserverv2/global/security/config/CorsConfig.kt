@@ -17,7 +17,7 @@ class CorsConfig(@Value("\${production.front-url}") val productionFrontUrl: Stri
                     productionFrontUrl,  // 실제 제품 서버
                     "http://localhost:3000" // React 개발 서버
                 )
-            allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")  // 허용된 HTTP 메소드 설정
+            allowedMethods = listOf("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS")  // 허용된 HTTP 메소드 설정
             allowedHeaders = listOf("Authorization", "Content-Type","C")  // 허용된 헤더 설정
         }
         val source = UrlBasedCorsConfigurationSource()  // UrlBasedCorsConfigurationSource(Url 기반 CorsConfiguration 설정) 객체 생성
