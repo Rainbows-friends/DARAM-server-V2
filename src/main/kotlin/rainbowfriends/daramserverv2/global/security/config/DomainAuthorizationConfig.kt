@@ -8,39 +8,26 @@ import org.springframework.stereotype.Component
 @Component
 class DomainAuthorizationConfig {
     fun configure(authorizeRequests: AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry) {
-        authorizeRequests  // HttpSecurity의 authorizeRequests 메서드를 사용하여 권한 설정
-            .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
-                HttpMethod.GET,  // GET 메서드
-                "/notice/all",
-                "/notice/{id}",
-                "/actuator/health",
-                "/checkin/checkin",
-                "/checkin/uncheckin",
-            ).permitAll()  // 모든 사용자에게 허용
-            .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
-                HttpMethod.POST,  // POST 메서드
-                "/notice/**",
-                "/camera/authorization"
-            ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
-            .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
-                HttpMethod.PUT,  // PUT 메서드
-                "/notice/**"
-            ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
-            .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
-                HttpMethod.PATCH,  // PATCH 메서드
-                "/notice/**",
-                "/member/room"
-            ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
-            .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
-                HttpMethod.DELETE,  // DELETE 메서드
-                "/notice/**"
-            ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
-            .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
-                "/actuator/**"
-            ).hasRole("DEVELOPER")  // DEVELOPER 권한을 가진 사용자에게만 허용
-            .requestMatchers(  // requestMatchers 메서드를 사용하여 요청에 대한 권한 설정
-                "/checkin"
-            ).hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // ADMIN, TEACHER, DEVELOPER 권한을 가진 사용자에게만 허용
-            .anyRequest().permitAll()  // 나머지 요청은 모든 사용자에게 허용
+        authorizeRequests
+            // `/oauth2/authorization/google` 요청 허용
+            .requestMatchers("/oauth2/authorization/google").permitAll()
+            // `/auth`로 시작하는 모든 요청 허용
+            .requestMatchers("/auth/**").permitAll()
+            // `/time`로 시작하는 모든 요청 허용
+            .requestMatchers("/time/**").permitAll()
+            // `/notice`로 시작하는 요청
+            .requestMatchers(HttpMethod.GET, "/notice/**").permitAll() // GET 요청은 모두 허용
+            .requestMatchers(HttpMethod.POST, "/notice/**").hasAnyRole("ADMIN", "TEACHER", "DEVELOPER") // POST 요청은 제한
+            .requestMatchers(HttpMethod.PUT, "/notice/**").hasAnyRole("ADMIN", "TEACHER", "DEVELOPER")  // PUT 요청은 제한
+            .requestMatchers(HttpMethod.PATCH, "/notice/**").hasAnyRole("ADMIN", "TEACHER", "DEVELOPER") // PATCH 요청은 제한
+            .requestMatchers(HttpMethod.DELETE, "/notice/**").hasAnyRole("ADMIN", "TEACHER", "DEVELOPER") // DELETE 요청은 제한
+            // `/checkin`으로 시작하는 요청
+            .requestMatchers("/checkin/**").permitAll() // 모든 요청은 허용
+            .requestMatchers(HttpMethod.PATCH, "/checkin/**").hasAnyRole("ADMIN", "TEACHER", "DEVELOPER") // PATCH 요청은 제한
+            // `/member`로 시작하는 요청
+            .requestMatchers(HttpMethod.GET, "/member/**").permitAll() // GET 요청은 모두 허용
+            .requestMatchers(HttpMethod.PATCH, "/member/**").hasAnyRole("ADMIN", "TEACHER", "DEVELOPER") // PATCH 요청은 제한
+            // 나머지 요청은 모두 허용
+            .anyRequest().permitAll()
     }
 }
