@@ -2,6 +2,7 @@ package rainbowfriends.daramserverv2.domain.notice.controller
 
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import rainbowfriends.daramserverv2.domain.notice.dto.request.PatchNoticeRequest
 import rainbowfriends.daramserverv2.domain.notice.dto.request.PostNoticeRequest
@@ -29,7 +30,7 @@ class NoticeController(
     }
 
     @PostMapping   // POST /notice
-    fun postNotice(request: HttpServletRequest, @RequestBody requestDto: PostNoticeRequest): NoticeResponse {  // HttpServletRequest 객체와 PostNoticeRequest 객체를 인자로 받아 NoticeResponse 객체 반환
+    fun postNotice(request: HttpServletRequest, @RequestBody @Validated requestDto: PostNoticeRequest): NoticeResponse {  // HttpServletRequest 객체와 PostNoticeRequest 객체를 인자로 받아 NoticeResponse 객체 반환
         return postNoticeService.postNotice(request, requestDto)
     }
 
